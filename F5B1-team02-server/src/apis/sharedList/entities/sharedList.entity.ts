@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Board } from 'src/apis/board/entities/board.entity';
 import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
 import { Schedule } from 'src/apis/schedule/entities/schedule.entity';

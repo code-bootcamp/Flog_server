@@ -3,9 +3,9 @@ import { Budget } from 'src/apis/budget/entities/budget.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum SPENDING_CATEGORY_STATUS_ENUM {
-  FOOD = 'FOOD', //충전
-  SHOPPING = 'SHOPPING', //사용
-  TRANSPORTATION = 'TRANSPORTATION', //적립
+  FOOD = 'FOOD',
+  SHOPPING = 'SHOPPING',
+  TRANSPORTATION = 'TRANSPORTATION',
   TOURISM = 'TOURISM',
   STAY = 'STAY',
   ETC = 'ETC',

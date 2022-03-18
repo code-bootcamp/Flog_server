@@ -20,7 +20,7 @@ import * as redisStore from 'cache-manager-redis-store';
       host: 'my_database',
       port: 3306,
       username: 'root',
-      password: '1234',
+      password: 'root',
       database: 'flog',
       entities: [__dirname + '/apis/**/*.entity.*'], //ts는 실제 실행될때 js로 저장됨
       synchronize: true,

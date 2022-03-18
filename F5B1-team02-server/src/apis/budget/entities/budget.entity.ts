@@ -1,10 +1,12 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
+import { Schedule } from 'src/apis/schedule/entities/schedule.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -23,10 +25,11 @@ export class Budget {
   @Field(() => Int)
   totalAmount: number;
 
-  //   @ManyToOne(()=>)
-  //   schedule:Schedule
+  @JoinColumn()
+  @OneToOne(() => Schedule)
+  schedule: Schedule;
 
-  // @OneToMany(() => MainCategory)
-  // @Field(())
-  // maincategory: MainCategory;
+  @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })
+  @Field(() => MainCategory)
+  mainCategory: MainCategory;
 }

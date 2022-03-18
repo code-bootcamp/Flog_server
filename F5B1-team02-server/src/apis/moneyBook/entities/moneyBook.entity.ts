@@ -1,11 +1,22 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Budget } from 'src/apis/budget/entities/budget.entity';
-import { SpendingCategory } from 'src/apis/spendingCategory/entities/spendingCategory.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+export enum SPENDING_CATEGORY_STATUS_ENUM {
+  FOOD = 'FOOD', //충전
+  SHOPPING = 'SHOPPING', //사용
+  TRANSPORTATION = 'TRANSPORTATION', //적립
+  TOURISM = 'TOURISM',
+  STAY = 'STAY',
+  ETC = 'ETC',
+}
+registerEnumType(SPENDING_CATEGORY_STATUS_ENUM, {
+  name: 'SPENDING_CATEGORY_STATUS_ENUM',
+});
 
 @Entity()
 @ObjectType()
-export class DetailSchedule {
+export class MoneyBook {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
   id: string;
@@ -13,12 +24,13 @@ export class DetailSchedule {
   @ManyToOne(() => Budget)
   budget: Budget;
 
-  @ManyToOne(() => SpendingCategory)
-  category: SpendingCategory;
-
   @Column()
   @Field(() => String)
   date: string;
+
+  @Column({ type: 'enum', enum: SPENDING_CATEGORY_STATUS_ENUM })
+  @Field(() => SPENDING_CATEGORY_STATUS_ENUM)
+  status: SPENDING_CATEGORY_STATUS_ENUM;
 
   @Column()
   @Field(() => String)

@@ -1,8 +1,10 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { User } from 'src/apis/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   //   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -42,6 +44,6 @@ export class PointTransaction {
   @Field(() => POINT_TRANSACTION_STATUS_ENUM)
   status: POINT_TRANSACTION_STATUS_ENUM;
 
-  //   @ManyToOne(()=>User)
-  //     user:User
+  @ManyToOne(() => User)
+  user: User;
 }

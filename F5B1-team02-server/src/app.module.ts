@@ -17,10 +17,10 @@ import * as redisStore from 'cache-manager-redis-store';
     }), //
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'my_database',
+      host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: '1234',
       database: 'flog',
       entities: [__dirname + '/apis/**/*.entity.*'], //ts는 실제 실행될때 js로 저장됨
       synchronize: true,

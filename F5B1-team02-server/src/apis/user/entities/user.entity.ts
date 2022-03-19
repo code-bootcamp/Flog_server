@@ -9,10 +9,6 @@ export class User {
   @Field(() => String)
   id: string;
 
-  @Column()
-  @Field(() => String)
-  name: string;
-
   @Column({ unique: true })
   @Field(() => String)
   email: string;
@@ -28,9 +24,10 @@ export class User {
   @Field(() => Int)
   phoneNumber: number;
 
-  @Column()
-  @Field(() => String)
-  gender: string;
+  // 총 포인트
+  @Column({ default: 0 })
+  @Field(() => Int)
+  point: number;
 
   // 프로필 이미지 다시 확인??
   @Column({ default: false })

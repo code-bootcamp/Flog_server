@@ -1,8 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BannerImage } from 'src/apis/bannerImage/entities/bannerImage.entity';
 import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
-import { NumberPeople } from 'src/apis/numberPeople/entities/numberPeople.entity';
-import { TravelTheme } from 'src/apis/travelTheme/entities/travelTheme.entity';
 import { User } from 'src/apis/user/entities/user.entity';
 import {
   Column,
@@ -12,6 +10,29 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+export enum NUMBER_PEOPLE_ENUM {
+  ONE = 'ONE', // 1명
+  TWO = 'TWO', // 2명
+  THREE = 'THREE', // 3명
+  FOUR = 'FOUR', // 4명
+  GROUP = 'GROUP', // 단체
+}
+
+registerEnumType(NUMBER_PEOPLE_ENUM, {
+  name: 'NUMBER_PEOPLE_ENUM',
+});
+export enum HASHTAG {
+  ALONE = 'ALONE', // 혼자서
+  FRIEND = 'FRIEND', // 친구
+  FAMILY = 'FAMILY', // 가족
+  COUPLE = 'COUPLE', // 커플
+  PET = 'PET', // 반려동물
+}
+
+registerEnumType(HASHTAG, {
+  name: 'HASHTAG',
+});
 
 @Entity()
 @ObjectType()
@@ -36,15 +57,15 @@ export class Schedule {
   @Field(() => String)
   endDate: Date;
 
-  // 여행테마
-  @JoinColumn()
-  @OneToOne(() => TravelTheme)
-  travelTheme: TravelTheme;
-
   // 인원수
-  @JoinColumn()
-  @OneToOne(() => NumberPeople)
-  numberPeople: NumberPeople;
+  @Column({ type: 'enum', enum: NUMBER_PEOPLE_ENUM })
+  @Field(() => NUMBER_PEOPLE_ENUM)
+  numberPeople: NUMBER_PEOPLE_ENUM;
+
+  // 해시태그
+  @Column({ type: 'enum', enum: HASHTAG })
+  @Field(() => HASHTAG)
+  hashtag: HASHTAG;
 
   // 사용자계정
   @ManyToOne(() => User, { cascade: true, onDelete: 'CASCADE' })

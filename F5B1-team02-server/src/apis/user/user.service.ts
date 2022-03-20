@@ -1,7 +1,22 @@
-import { ConflictException, HttpException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserInput } from './dto/createUser.input';
+import { UpdateUserInput } from './dto/updateUser.input';
+
+// interface ICreate {
+//   createUserInput: CreateUserInput;
+// }
+interface IUpdate {
+  userEmail: string;
+  updateUserInput: UpdateUserInput;
+}
 
 @Injectable()
 export class UserService {
@@ -10,17 +25,33 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  // findOne
   async findOne({ email }) {
     return await this.userRepository.findOne({ email });
   }
 
-  // create
-  async create({ email, hashedPassword: password, nickname }) {
-    const user = await this.userRepository.findOne({ email });
-    if (user) throw new ConflictException('이미 등록된 이메일 입니다.');
+  async create(createUser: CreateUserInput) {
+    const { email, ...user } = createUser;
+    const isUserEmail = await this.userRepository.findOne({ email });
 
-    //const password = hashedPassword;
-    return await this.userRepository.save({ email, password, nickname });
+    if (isUserEmail) {
+      throw new HttpException(
+        '이미 등록된 이메일 입니다.',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    } else {
+      return await this.userRepository.save({
+        ...user,
+        email: email,
+      });
+    }
+  }
+
+  async update({ userEmail, updateUserInput }: IUpdate) {
+    const user = await this.userRepository.findOne({ email: userEmail });
+    const newUser = {
+      ...user,
+      ...updateUserInput,
+    };
+    return await this.userRepository.save(newUser);
   }
 }

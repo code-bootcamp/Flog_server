@@ -17,12 +17,12 @@ services:
     environment:
       MYSQL_DATABASE: 'flog'
       MYSQL_ROOT_PASSWORD: 'root'
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --skip-character-set-client-handshake
-    cap_add:
-      - SYS_NICE
+    # command:
+    #   - --character-set-server=utf8mb4
+    #   - --collation-server=utf8mb4_unicode_ci
+    #   - --skip-character-set-client-handshake
+    # cap_add:
+    #   - SYS_NICE
     ports:
       - 3306:3306
 

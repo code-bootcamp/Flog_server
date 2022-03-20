@@ -1,0 +1,91 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MainCategory {
+  id: String!
+  name: String!
+}
+
+type User {
+  id: String!
+  email: String!
+  nickName: String!
+  phoneNumber: Int!
+  point: Int!
+  url: String!
+  mainCategory: MainCategory!
+}
+
+type BannerImage {
+  id: String!
+  url: String!
+  isImage: Boolean!
+}
+
+type Schedule {
+  id: String!
+  title: String!
+  location: String!
+  startDate: String!
+  endDate: String!
+  numberPeople: NUMBER_PEOPLE_ENUM!
+  hashtag: HASHTAG!
+  user: User!
+  bannerImage: BannerImage!
+  mainCategory: MainCategory!
+}
+
+enum NUMBER_PEOPLE_ENUM {
+  ONE
+  TWO
+  THREE
+  FOUR
+  GROUP
+}
+
+enum HASHTAG {
+  ALONE
+  FRIEND
+  FAMILY
+  COUPLE
+  PET
+}
+
+type Board {
+  day: String!
+  content: String!
+  isShare: Boolean!
+  mainCategory: MainCategory!
+}
+
+type PointTransaction {
+  id: String!
+  impuid: String!
+  amount: Int!
+}
+
+type Query {
+  fetchProducts: String!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(userEmail: String!, updateUserInput: UpdateUserInput!): User!
+  login(email: String!, password: String!): String!
+  restoreAccessToken: String!
+}
+
+input CreateUserInput {
+  nickName: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  nickName: String
+  phoneNumber: Int
+  email: String
+  password: String
+  url: String
+}

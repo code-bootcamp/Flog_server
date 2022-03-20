@@ -20,7 +20,7 @@ export class User {
   @Field(() => String)
   nickName: string;
 
-  @Column()
+  @Column({ default: null })
   @Field(() => Int)
   phoneNumber: number;
 

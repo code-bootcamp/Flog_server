@@ -16,7 +16,8 @@ import {
 export class Board {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
-  day: string;
+  id: string;
+  // day: string;
 
   @Column()
   @Field(() => String)

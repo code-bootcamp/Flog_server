@@ -14,6 +14,7 @@ export enum POINT_TRANSACTION_STATUS_ENUM {
   CHARGE = 'CHARGE', //충전
   PAYMENT = 'PAYMENT', //사용
   EARN = 'EARN', //적립
+  CANCEL = 'CANCEL', //결제취소
 }
 registerEnumType(POINT_TRANSACTION_STATUS_ENUM, {
   name: 'POINT_TRANSACTION_STATUS_ENUM',
@@ -26,7 +27,7 @@ export class PointHistory {
   @Field(() => String)
   id: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   changed: number;
 

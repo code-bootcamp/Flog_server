@@ -11,16 +11,23 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 import { AuthService } from './auth.service';
-import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth-guard';
+
+import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
+
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 
 @Resolver()
 export class AuthResolver {
   constructor(
     private readonly userService: UserService,
+
+    private readonly authService: AuthService, // @Inject(CACHE_MANAGER)
+  ) // private readonly cacheManager: Cache,
+
     private readonly authService: AuthService,
   ) // @Inject(CACHE_MANAGER)
   // private readonly cacheManager: Cache,
+
   {}
 
   // 로그인

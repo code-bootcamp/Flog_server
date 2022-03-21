@@ -9,6 +9,9 @@ import { JwtRefreshStrategy } from 'src/common/auth/jwt-refresh.stategy';
 import { JwtGoogleStrategy } from 'src/common/auth/jwt-social-google.stategy';
 import { AuthController } from './auth.controller';
 
+import { JwtAccessStrategy } from 'src/common/auth/jwt-access.stategy';
+
+
 @Module({
   imports: [
     JwtModule.register({}), //
@@ -17,6 +20,8 @@ import { AuthController } from './auth.controller';
   providers: [
     JwtRefreshStrategy,
     JwtGoogleStrategy,
+
+    JwtAccessStrategy,
     AuthResolver,
     AuthService,
     UserService,

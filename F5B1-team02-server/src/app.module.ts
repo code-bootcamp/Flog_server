@@ -7,6 +7,11 @@ import { UserModule } from './apis/user/user.module';
 import { AuthModule } from './apis/auth/auth.module';
 import { RedisClientOptions } from 'redis';
 import * as redisStore from 'cache-manager-redis-store';
+import { PointTransactionModule } from './apis/pointTranscation/pointTransaction.module';
+import { JwtRefreshStrategy } from './common/auth/jwt-refresh.stategy';
+import { JwtGoogleStrategy } from './common/auth/jwt-social-google.stategy';
+import { PointHisoryModule } from './apis/pointHistory/pointHistory.module';
+import { BudgetModule } from './apis/budget/budget.module';
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
 
@@ -14,6 +19,13 @@ import * as redisStore from 'cache-manager-redis-store';
   imports: [
     UserModule,
     AuthModule,
+
+    BudgetModule,
+    PointHisoryModule,
+    PointTransactionModule,
+    JwtRefreshStrategy,
+    JwtGoogleStrategy,
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/common/graphql/schema.gql',
@@ -30,7 +42,7 @@ import * as redisStore from 'cache-manager-redis-store';
       synchronize: true,
       logging: true,
     }),
-    // ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true }),
     // CacheModule.register<RedisClientOptions>({
     //   store: redisStore,
     //   url: 'redis://my_redis:6379',

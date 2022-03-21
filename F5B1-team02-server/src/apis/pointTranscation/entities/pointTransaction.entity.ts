@@ -17,7 +17,7 @@ export class PointTransaction {
 
   @Column()
   @Field(() => String)
-  impuid: string;
+  impUid: string;
 
   @Column()
   @Field(() => Int)

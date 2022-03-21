@@ -17,6 +17,27 @@ type User {
   mainCategory: MainCategory!
 }
 
+type PointTransaction {
+  id: String!
+  impUid: String!
+  amount: Int!
+}
+
+type PointHistory {
+  id: String!
+  changed: Int!
+  status: POINT_TRANSACTION_STATUS_ENUM!
+  pointId: PointTransaction!
+}
+
+enum POINT_TRANSACTION_STATUS_ENUM {
+  CHARGE
+  PAYMENT
+  EARN
+  CANCEL
+}
+
+
 type BannerImage {
   id: String!
   url: String!
@@ -53,20 +74,35 @@ enum HASHTAG {
 }
 
 type Board {
+
+  id: String!
+
   day: String!
+
   content: String!
   isShare: Boolean!
   mainCategory: MainCategory!
 }
 
+type Budget {
+  id: String!
+  amount: Int!
+  totalAmount: Int!
+  mainCategory: MainCategory!
+
 type PointTransaction {
   id: String!
   impuid: String!
   amount: Int!
+
 }
 
 type Query {
   fetchProducts: String!
+
+  fetchBudget(scheduleId: String!): Budget!
+  fetchPointHistory: [PointHistory!]!
+
 }
 
 type Mutation {
@@ -74,6 +110,13 @@ type Mutation {
   updateUser(userEmail: String!, updateUserInput: UpdateUserInput!): User!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
+
+  createBudget(totalAmount: Float!, scheduleId: String!): Budget!
+  createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
+  cancelPointTransaction(impUid: String!): PointTransaction!
+  paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
+
+
 }
 
 input CreateUserInput {

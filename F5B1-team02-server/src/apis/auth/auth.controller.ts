@@ -4,9 +4,6 @@ import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-// import dotenv from 'dotenv';
-// dotenv.config();
-// require('dotenv').config();
 
 interface IOAuthUser {
   user: Pick<User, 'nickName' | 'email' | 'phoneNumber' | 'password'>;

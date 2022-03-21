@@ -8,7 +8,9 @@ import { User } from '../user/entities/user.entity';
 import { JwtRefreshStrategy } from 'src/common/auth/jwt-refresh.stategy';
 import { JwtGoogleStrategy } from 'src/common/auth/jwt-social-google.stategy';
 import { AuthController } from './auth.controller';
+
 import { JwtAccessStrategy } from 'src/common/auth/jwt-access.stategy';
+
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { JwtAccessStrategy } from 'src/common/auth/jwt-access.stategy';
   providers: [
     JwtRefreshStrategy,
     JwtGoogleStrategy,
+
     JwtAccessStrategy,
     AuthResolver,
     AuthService,

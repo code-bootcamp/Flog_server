@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-// import dotenv from 'dotenv';
-// dotenv.config();
-// require('dotenv').config();
+
+
 
 @Injectable()
 export class AuthService {
@@ -29,7 +28,9 @@ export class AuthService {
   getAccessToken({ user }) {
     return this.jwtService.sign(
       { email: user.email, sub: user.id }, //
+
       { secret: process.env.ACCESS_TOKEN_KEY, expiresIn: '1h' },
+
     );
   }
 }

@@ -4,9 +4,7 @@ import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { UseGuards } from '@nestjs/common';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
-
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
-
 import { CreateUserInput } from './dto/createUser.input';
 import { UpdateUserInput } from './dto/updateUser.input';
 // import { AuthGuard } from '@nestjs/passport';
@@ -30,6 +28,7 @@ export class UserResolver {
 
   // 회원정보 조회
   @UseGuards(GqlAuthAccessGuard)
+  @Query(() => User)
   async fetchUser(
     @CurrentUser() currentUser: ICurrentUser, //
   ) {
@@ -47,15 +46,18 @@ export class UserResolver {
   @Mutation(() => User)
   async updateUser(
     @CurrentUser() currentUser: ICurrentUser, //
-    @Args('userEmail') userEmail: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ) {
-    return await this.userService.update({ userEmail, updateUserInput });
-  }
+    const { email, ...user } = currentUser;
 
-  // 테스트
-  @Query(() => String)
-  fetchProducts() {
-    return '테스트';
+    // 수정한 비밀번호 해쉬로변경
+    const { password, ...update } = updateUserInput;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return await this.userService.update({
+      email,
+      hashedPassword,
+      updateUserInput,
+    });
   }
 }

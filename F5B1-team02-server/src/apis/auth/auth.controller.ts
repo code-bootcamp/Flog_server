@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
@@ -16,7 +16,7 @@ export class AuthController {
     private readonly authService: AuthService,
   ) {}
 
-  // 구글
+  // 구글 로그인
   @Get('/login/google')
   @UseGuards(AuthGuard('google'))
   async loginGoogle(
@@ -36,8 +36,8 @@ export class AuthController {
 
     this.authService.setRefreshToken({ user, res });
 
-    res.redirect(
-      'http://localhost:5500/class/21-02-login-refresh-restore/frontend/social-login.html',
-    );
+    res.redirect('http://localhost:5500/frontend/social-login-success.html');
   }
+
+  // 구글 로그아웃
 }

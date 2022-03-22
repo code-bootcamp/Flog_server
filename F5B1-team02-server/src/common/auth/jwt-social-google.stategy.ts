@@ -1,9 +1,6 @@
 import { Strategy, Profile } from 'passport-google-oauth20';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-// import * as dotenv from 'dotenv';
-// dotenv.config();
-
 
 @Injectable()
 export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -27,7 +24,7 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
       email: profile.emails[0].value,
       nickName: profile.displayName,
       password: profile.id,
-      phoneNumber: '01000000000',
+      url: profile._json.picture,
     };
   }
 }

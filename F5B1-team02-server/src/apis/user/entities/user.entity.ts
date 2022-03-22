@@ -21,8 +21,8 @@ export class User {
   nickName: string;
 
   @Column({ default: null })
-  @Field(() => Int)
-  phoneNumber: number;
+  @Field(() => String, { nullable: true })
+  phoneNumber?: string;
 
   // 총 포인트
   @Column({ default: 0 })

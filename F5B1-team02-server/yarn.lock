@@ -1235,6 +1235,7 @@
     "@types/passport" "*"
     "@types/passport-oauth2" "*"
 
+
 "@types/passport-jwt@^3.0.6":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@types/passport-jwt/-/passport-jwt-3.0.6.tgz#41cc8b5803d5f5f06eb33e19c453b42716def4f1"
@@ -1244,6 +1245,7 @@
     "@types/jsonwebtoken" "*"
     "@types/passport-strategy" "*"
 
+
 "@types/passport-oauth2@*":
   version "1.4.11"
   resolved "https://registry.yarnpkg.com/@types/passport-oauth2/-/passport-oauth2-1.4.11.tgz#fbca527ecb44258774d17bcb251630c321515fa9"
@@ -1252,6 +1254,7 @@
     "@types/express" "*"
     "@types/oauth" "*"
     "@types/passport" "*"
+
 
 "@types/passport-strategy@*":
   version "0.2.35"

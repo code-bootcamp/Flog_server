@@ -17,11 +17,11 @@ export class Budget {
   @Field(() => String)
   id: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   amount: number;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   totalAmount: number;
 
@@ -29,6 +29,7 @@ export class Budget {
   @OneToOne(() => Schedule)
   schedule: Schedule;
 
+  @JoinColumn()
   @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })
   @Field(() => MainCategory)
   mainCategory: MainCategory;

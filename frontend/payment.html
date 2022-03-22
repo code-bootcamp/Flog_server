@@ -16,23 +16,23 @@
     ></script>
     <script>
       function mypayment() {
-        const myAmount = Number(document.getElementById('amount').value);
+        const myAmount = Number(document.getElementById("amount").value);
 
         const IMP = window.IMP; // 생략 가능
-        IMP.init('imp71807976'); // Example: imp00000000
+        IMP.init("imp71807976"); // Example: imp00000000
         IMP.request_pay(
           {
             // param
-            pg: 'html5_inicis',
-            pay_method: 'card',
-            name: '마우스',
+            pg: "html5_inicis",
+            pay_method: "card",
+            name: "마우스",
             amount: myAmount,
-            buyer_email: 'gildong@gmail.com',
-            buyer_name: '홍길동',
-            buyer_tel: '010-4242-4242',
-            buyer_addr: '서울특별시 강남구 신사동',
-            buyer_postcode: '01181',
-            m_redirect_url: '', // 모바일 결제후 리다이렉트될 주소!!
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
           },
           async (rsp) => {
             // callback
@@ -41,7 +41,7 @@
               console.log(rsp);
 
               const data = await axios.post(
-                'http://localhost:3000/graphql',
+                "http://localhost:3000/graphql",
                 {
                   query: `
                       mutation {
@@ -54,16 +54,16 @@
                 {
                   headers: {
                     authorization:
-                      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvbmljbzA4MzBAZ29vZ2xlLmNvbSIsInN1YiI6IjQ0ZWVmMGMzLThlNzktNDBjMy05MTUwLTRiOWQ0N2I3ZjI0NCIsImlhdCI6MTY0NzgxNTE5NCwiZXhwIjoxNjQ3ODE4Nzk0fQ.FtoomOspq16DuiQ-qY6kqsDz-3tMbt6uEUiyQp-8GTk',
+                      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIyQGdvb2dsZS5jb20iLCJzdWIiOiI3MjRiYmU2NS1hMTdiLTRlNGQtODQzMC1hZGI3Yjg2YjczZDYiLCJpYXQiOjE2NDc4NTM4MzUsImV4cCI6MTY0Nzg1NzQzNX0.NtiMLHeKZbGmgERzcN_ROhCk_TsKqaLOGVUVoE10l8M",
                   },
-                },
+                }
               );
 
               console.log(data);
             } else {
               // 결제 실패시
             }
-          },
+          }
         );
       }
     </script>

@@ -9,20 +9,25 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserInput } from './dto/createUser.input';
 import { UpdateUserInput } from './dto/updateUser.input';
+import * as bcrypt from 'bcrypt';
+import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 
 // interface ICreate {
 //   createUserInput: CreateUserInput;
 // }
-interface IUpdate {
-  userEmail: string;
-  updateUserInput: UpdateUserInput;
-}
+// interface IUpdate {
+//   email: string;
+//   updateUserInput: UpdateUserInput;
+//   hashedPassword: string;
+// }
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(MainCategory)
+    private readonly mainCategoryRepository: Repository<MainCategory>,
   ) {}
 
   async findOne({ email }) {
@@ -30,8 +35,11 @@ export class UserService {
   }
 
   async create(createUser: CreateUserInput) {
-    const { email, ...user } = createUser;
+    const { email, mainCategoryId, ...user } = createUser;
     const isUserEmail = await this.userRepository.findOne({ email });
+    const result = await this.mainCategoryRepository.findOne({
+      id: mainCategoryId,
+    });
 
     if (isUserEmail) {
       throw new HttpException(
@@ -42,16 +50,15 @@ export class UserService {
       return await this.userRepository.save({
         ...user,
         email: email,
+        mainCategory: result,
       });
     }
   }
 
-  async update({ userEmail, updateUserInput }: IUpdate) {
-    const user = await this.userRepository.findOne({ email: userEmail });
-    const newUser = {
-      ...user,
-      ...updateUserInput,
-    };
+  async update({ email, hashedPassword: password, updateUserInput }) {
+    const user = await this.userRepository.findOne({ email });
+    const newUser = { ...user, ...updateUserInput, password }; // 순서
+    console.log(newUser);
     return await this.userRepository.save(newUser);
   }
 }

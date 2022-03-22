@@ -4,6 +4,7 @@ import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity
 import { User } from 'src/apis/user/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -12,22 +13,22 @@ import {
 } from 'typeorm';
 
 export enum NUMBER_PEOPLE_ENUM {
-  ONE = 'ONE', // 1명
-  TWO = 'TWO', // 2명
-  THREE = 'THREE', // 3명
-  FOUR = 'FOUR', // 4명
-  GROUP = 'GROUP', // 단체
+  ONE = '1명', // 1명
+  TWO = '2명', // 2명
+  THREE = '3명', // 3명
+  FOUR = '4명', // 4명
+  GROUP = '단체', // 단체
 }
 
 registerEnumType(NUMBER_PEOPLE_ENUM, {
   name: 'NUMBER_PEOPLE_ENUM',
 });
 export enum HASHTAG {
-  ALONE = 'ALONE', // 혼자서
-  FRIEND = 'FRIEND', // 친구
-  FAMILY = 'FAMILY', // 가족
-  COUPLE = 'COUPLE', // 커플
-  PET = 'PET', // 반려동물
+  ALONE = '혼자서', // 혼자서
+  FRIEND = '친구', // 친구
+  FAMILY = '가족', // 가족
+  COUPLE = '커플', // 커플
+  PET = '반려동물', // 반려동물
 }
 
 registerEnumType(HASHTAG, {
@@ -51,11 +52,11 @@ export class Schedule {
 
   @Column()
   @Field(() => String)
-  startDate: Date;
+  startDate: String;
 
   @Column()
   @Field(() => String)
-  endDate: Date;
+  endDate: String;
 
   // 인원수
   @Column({ type: 'enum', enum: NUMBER_PEOPLE_ENUM })
@@ -82,4 +83,9 @@ export class Schedule {
   @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })
   @Field(() => MainCategory)
   mainCategory: MainCategory;
+
+  // 작성날짜
+  @CreateDateColumn()
+  @Field(() => Date)
+  createAt: Date;
 }

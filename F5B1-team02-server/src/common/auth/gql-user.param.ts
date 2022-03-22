@@ -4,7 +4,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 export interface ICurrentUser {
   id: string;
   email: string;
-
+  exp: string;
 }
 
 export const CurrentUser = createParamDecorator(
@@ -12,4 +12,4 @@ export const CurrentUser = createParamDecorator(
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req.user;
   },
-
+); //user.resolver.ts의 fetchUser로

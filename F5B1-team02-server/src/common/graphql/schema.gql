@@ -28,6 +28,7 @@ type PointHistory {
   changed: Int!
   status: POINT_TRANSACTION_STATUS_ENUM!
   pointId: PointTransaction!
+  mainCategory: MainCategory!
 }
 
 enum POINT_TRANSACTION_STATUS_ENUM {
@@ -100,7 +101,8 @@ type PointTransaction {
 type Query {
   fetchProducts: String!
 
-  fetchBudget(scheduleId: String!): Budget!
+  fetchBudget(scheduleId: String!): [Budget!]!
+
   fetchPointHistory: [PointHistory!]!
 
 }
@@ -112,6 +114,7 @@ type Mutation {
   restoreAccessToken: String!
 
   createBudget(totalAmount: Float!, scheduleId: String!): Budget!
+  updateBudget(totalAmount: Float!, scheduleId: String!): Budget!
   createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
   cancelPointTransaction(impUid: String!): PointTransaction!
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!

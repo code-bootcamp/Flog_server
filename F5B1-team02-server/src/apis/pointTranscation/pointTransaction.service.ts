@@ -172,14 +172,15 @@ export class PointTransactionService {
       const usePointTransacion = this.pointHistoryRepository.create({
         user: currentUser.id,
         changed: -point,
+        status: POINT_TRANSACTION_STATUS_ENUM.PAYMENT,
       });
       await queryRunner.manager.save(usePointTransacion);
 
-      const payPointHistory = this.pointHistoryRepository.create({
-        status: POINT_TRANSACTION_STATUS_ENUM.PAYMENT,
-      });
+      // const payPointHistory = this.pointHistoryRepository.create({
+      //   status: POINT_TRANSACTION_STATUS_ENUM.PAYMENT,
+      // });
 
-      await queryRunner.manager.save(payPointHistory);
+      // await queryRunner.manager.save(payPointHistory);
 
       console.log('111', usePointTransacion);
       const payUserfind = await queryRunner.manager.findOne(User, {
@@ -192,16 +193,17 @@ export class PointTransactionService {
       });
       await queryRunner.manager.save(payUser);
 
-      console.log('333', payPointHistory);
-      console.log('+++++++', userId);
+      // console.log('333', payPointHistory);
+      // console.log('+++++++', userId);
 
       //받는 유저 포인트 증가 / 히스토리 테이블 저장 + 상태표시
       const earnPointTransaction = this.pointHistoryRepository.create({
-        id: userId,
+        user: userId,
         changed: point,
+        status: POINT_TRANSACTION_STATUS_ENUM.EARN,
       });
       await queryRunner.manager.save(earnPointTransaction);
-      console.log(earnPointTransaction);
+      // console.log(earnPointTransaction);
       const earnUserfind = await queryRunner.manager.findOne(User, {
         id: userId,
       });
@@ -210,13 +212,13 @@ export class PointTransactionService {
         id: userId,
         point: earnUserfind.point + point,
       });
-      console.log('444', earnUser);
       await queryRunner.manager.save(earnUser);
 
-      const earnPointHistory = this.pointHistoryRepository.create({
-        status: POINT_TRANSACTION_STATUS_ENUM.EARN,
-      });
-      await queryRunner.manager.save(earnPointHistory);
+      // const earnPointHistory = this.pointHistoryRepository.create({
+      //   status: POINT_TRANSACTION_STATUS_ENUM.EARN,
+      // });
+      // await queryRunner.manager.save(earnPointHistory);
+      await queryRunner.commitTransaction();
       return earnUser;
     } catch (error) {
       await queryRunner.rollbackTransaction();

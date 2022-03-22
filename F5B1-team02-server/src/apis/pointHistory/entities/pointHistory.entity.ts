@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
 import { PointTransaction } from 'src/apis/pointTranscation/entities/pointTransaction.entity';
 import { User } from 'src/apis/user/entities/user.entity';
 import {
@@ -44,4 +45,9 @@ export class PointHistory {
   @JoinColumn()
   @Field(() => PointTransaction)
   pointId: PointTransaction;
+
+  @JoinColumn()
+  @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })
+  @Field(() => MainCategory)
+  mainCategory: MainCategory;
 }

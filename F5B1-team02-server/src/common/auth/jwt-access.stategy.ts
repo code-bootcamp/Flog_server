@@ -7,12 +7,11 @@ import {
   CACHE_MANAGER,
   Inject,
 } from '@nestjs/common';
-import { Cache } from 'cache-manager';
+// import { Cache } from 'cache-manager';
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
-  constructor() // @Inject(CACHE_MANAGER) //
-  // private readonly cacheManager: Cache,
+  constructor() // private readonly cacheManager: Cache, // @Inject(CACHE_MANAGER) //
   {
     //검증로직, 실패시 밑으로 안가고 프론트로 넘어감
 =======

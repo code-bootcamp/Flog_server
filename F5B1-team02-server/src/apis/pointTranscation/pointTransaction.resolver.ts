@@ -69,14 +69,11 @@ export class PointTransactionResolver {
     //결제하기에 충분한 포인트 잔액이 남았는지
     await this.pointTransactionService.checkPoint({ currentUser });
     //셀프로 후원하는게 아닌지
-    console.log('11');
     await this.pointTransactionService.checkSelf({ currentUser, userId });
     //받는 유저가 존재하는 유저인지 확인
-    console.log('22');
     await this.pointTransactionService.checkUser({ userId });
     //내 포인트 차감 데이터 저장 - 히스토리 저장 + 상태표시
     //받는사람 포인트 증가 - 히스토리 저장 + 상태표시
-    console.log('33');
     return this.pointTransactionService.paidPoint({
       point,
       currentUser,

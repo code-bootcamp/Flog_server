@@ -12,7 +12,8 @@ export class BudgetResolver {
     private readonly budgetService: BudgetService,
   ) {}
 
-  @Query(() => Budget)
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [Budget])
   async fetchBudget(
     @Args('scheduleId') scheduleId: string,
     @CurrentUser() currentUser: ICurrentUser,
@@ -27,8 +28,23 @@ export class BudgetResolver {
     @Args('scheduleId') scheduleId: string,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    await this.budgetService.checkUser({ currentUser });
-    await this.budgetService.create({ scheduleId, totalAmount, currentUser });
-    //로그인 되어있으면 저장, 아니라면 저장못함
+    return await this.budgetService.create({
+      scheduleId,
+      totalAmount,
+      currentUser,
+    });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Budget)
+  async updateBudget(
+    @Args('totalAmount') totalAmount: number,
+    @Args('scheduleId') scheduleId: string,
+    @CurrentUser() currentUser: ICurrentUser, //
+  ) {
+    return await this.budgetService.update({
+      totalAmount,
+      scheduleId,
+    });
   }
 }

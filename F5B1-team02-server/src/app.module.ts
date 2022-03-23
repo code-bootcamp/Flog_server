@@ -17,6 +17,7 @@ import { ScheduleModule } from './apis/schedule/schedule.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MoneyBookModule } from './apis/moneyBook/moneyBook.module';
+import { DetailScheduleModule } from './apis/detailSchedule/detailSchedule.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { MoneyBookModule } from './apis/moneyBook/moneyBook.module';
     BannerImageModule,
     ScheduleModule,
     MoneyBookModule,
+    DetailScheduleModule,
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

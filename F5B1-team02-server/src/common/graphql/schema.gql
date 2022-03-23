@@ -112,6 +112,17 @@ enum SPENDING_CATEGORY_STATUS_ENUM {
   ETC
 }
 
+type DetailSchedule {
+  id: String!
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String!
+  schedule: Schedule!
+}
+
 type Query {
   fetchUser: User!
   fetchBudget(scheduleId: String!): [Budget!]!
@@ -135,6 +146,7 @@ type Mutation {
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
+  createdetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
 }
 
 input CreateUserInput {
@@ -180,4 +192,13 @@ input UpdateMoneyBookInput {
   time: String!
   context: String!
   memo: String!
+}
+
+input CreateDetailScheduleInput {
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
 }

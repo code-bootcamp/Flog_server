@@ -24,7 +24,7 @@ export class MoneyBook {
   @ManyToOne(() => Budget)
   budget: Budget;
 
-  @Column()
+  @Column({ default: false })
   @Field(() => String)
   date: string;
 
@@ -32,19 +32,19 @@ export class MoneyBook {
   @Field(() => SPENDING_CATEGORY_STATUS_ENUM)
   status: SPENDING_CATEGORY_STATUS_ENUM;
 
-  @Column()
+  @Column({ default: false })
   @Field(() => String)
   time: string;
 
-  @Column()
+  @Column({ default: false })
   @Field(() => String)
   context: string;
 
-  @Column()
+  @Column({ default: false })
   @Field(() => String)
   memo: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   amount: number;
 }

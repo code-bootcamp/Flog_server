@@ -16,6 +16,7 @@ import { BannerImageModule } from './apis/bannerImage/bannerImage.module';
 import { ScheduleModule } from './apis/schedule/schedule.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MoneyBookModule } from './apis/moneyBook/moneyBook.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AppService } from './app.service';
     JwtGoogleStrategy,
     BannerImageModule,
     ScheduleModule,
+    MoneyBookModule,
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

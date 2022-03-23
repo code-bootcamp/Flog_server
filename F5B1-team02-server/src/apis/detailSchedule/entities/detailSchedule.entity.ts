@@ -29,8 +29,8 @@ export class DetailSchedule {
   @Field(() => String)
   place: string;
 
-  @Column({ nullable: true })
-  @Field(() => String)
+  @Column({ default: null })
+  @Field(() => String, { nullable: true })
   memo?: string;
 
   // 일정

@@ -119,7 +119,7 @@ type DetailSchedule {
   startTime: String!
   useTime: String!
   place: String!
-  memo: String!
+  memo: String
   schedule: Schedule!
 }
 
@@ -130,6 +130,7 @@ type Query {
   fetchSchedules(page: Float = 1): [Schedule!]!
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
   fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
+  fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
 }
 
 type Mutation {

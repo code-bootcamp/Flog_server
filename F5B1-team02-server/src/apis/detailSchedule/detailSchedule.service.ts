@@ -44,6 +44,33 @@ export class DetailScheduleService {
     }
   }
 
+  async findMyQt1({ currentUser, scheduleId, userId, day }) {
+    const myQts = await this.detailScheduleRepository
+      .createQueryBuilder()
+      .select('detail_schedule')
+      .from(DetailSchedule, 'detail_schedule')
+      .innerJoin('detail_schedule', 'schedule.id')
+      .where('detail_schedule.scheduleId = :scheduleId', {
+        scheduleId: scheduleId,
+      })
+      .andWhere('detail_schedule.day = :day', {
+        day: day,
+      })
+      .orderBy({
+        'detail_schedule.startTime': 'DESC',
+      })
+      .getMany();
+
+    if (currentUser.id !== userId) {
+      throw new HttpException(
+        '로그인id 와 scheduleId 의 유저 아이디가 같지 않습니다',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    } else {
+      return myQts;
+    }
+  }
+
   async findOne({ id }) {
     return await this.detailScheduleRepository.findOne({ id });
   }

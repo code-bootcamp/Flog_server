@@ -28,6 +28,22 @@ export class DetailScheduleResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [DetailSchedule])
+  async fetchDetailSchedule(
+    @CurrentUser() currentUser: ICurrentUser, //
+    @Args('scheduleId') scheduleId: string,
+    @Args('userId') userId: string,
+    @Args('day') day: string,
+  ) {
+    return await this.detailScheduleService.findMyQt1({
+      currentUser,
+      scheduleId,
+      userId,
+      day,
+    });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => DetailSchedule)
   async createDetailSchedule(
     @CurrentUser() currentUser: ICurrentUser, //

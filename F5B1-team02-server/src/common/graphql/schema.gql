@@ -148,6 +148,7 @@ type Mutation {
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createdetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
   updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
+  deleteDetailSchedule(detailScheduleId: String!): Boolean!
 }
 
 input CreateUserInput {

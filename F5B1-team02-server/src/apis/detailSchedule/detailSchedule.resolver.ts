@@ -39,4 +39,12 @@ export class DetailScheduleResolver {
       updateDetailScheduleInput,
     });
   }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
+  async deleteDetailSchedule(
+    @Args('detailScheduleId') detailScheduleId: string,
+  ) {
+    return await this.detailScheduleService.delete({ detailScheduleId });
+  }
 }

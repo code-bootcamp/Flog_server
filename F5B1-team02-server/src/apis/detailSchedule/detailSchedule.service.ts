@@ -6,6 +6,11 @@ import { DetailSchedule } from './entities/detailSchedule.entity';
 //   createDetailScheduleInput: CreateDetailScheduleInput;
 //   scheduleId: string;
 // }
+
+interface IDelete {
+  detailScheduleId: string;
+}
+
 @Injectable()
 export class DetailScheduleService {
   constructor(
@@ -33,5 +38,12 @@ export class DetailScheduleService {
       ...updateDetailScheduleInput,
     };
     return await this.detailScheduleRepository.save(newDetailSchedule);
+  }
+
+  async delete({ detailScheduleId }) {
+    const detailIdInfo = await this.detailScheduleRepository.delete({
+      id: detailScheduleId,
+    });
+    return detailIdInfo.affected ? true : false;
   }
 }

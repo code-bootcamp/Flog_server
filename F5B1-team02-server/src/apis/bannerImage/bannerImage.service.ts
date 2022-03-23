@@ -1,35 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
 import { Storage } from '@google-cloud/storage';
-import { Repository } from 'typeorm';
-import { BannerImage } from './entities/bannerImage.entity';
+
+interface IFile {
+  file: FileUpload;
+}
 
 @Injectable()
 export class BannerImageService {
-  constructor(
-    @InjectRepository(BannerImage)
-    private readonly bannerimageRepository: Repository<BannerImage>,
-  ) {}
-
-  async findOne({ id }) {
-    await this.bannerimageRepository.findOne({ id });
-  }
-
-  async upload({ file }) {
+  async upload({ file }: IFile) {
+    // 스토리지에 이미지 업로드
     const storage = new Storage({
       keyFilename: process.env.STORAGE_KEY_FILENAME,
       projectId: process.env.STORAGE_PROJECT_ID,
-    }).bucket(process.env.STORAGE_BUCKET);
+    })
+      .bucket(process.env.STORAGE_BUCKET)
+      .file(file.filename);
 
     const result = await new Promise((resolve, reject) => {
       file
         .createReadStream()
-        .pipe(storage.file(file.filename).createWriteStream())
+        .pipe(storage.createWriteStream())
         .on('finish', () =>
           resolve(`${process.env.STORAGE_BUCKET}/${file.filename}`),
         )
-        .on('error', (error) => reject('error: ' + error));
+        .on('error', (error) => reject(error));
     });
 
     return result;

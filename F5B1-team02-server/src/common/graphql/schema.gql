@@ -11,7 +11,7 @@ type User {
   id: String!
   email: String!
   nickName: String!
-  phoneNumber: Int!
+  phoneNumber: String
   point: Int!
   url: String!
   mainCategory: MainCategory!
@@ -38,7 +38,6 @@ enum POINT_TRANSACTION_STATUS_ENUM {
   CANCEL
 }
 
-
 type BannerImage {
   id: String!
   url: String!
@@ -56,6 +55,7 @@ type Schedule {
   user: User!
   bannerImage: BannerImage!
   mainCategory: MainCategory!
+  createAt: DateTime!
 }
 
 enum NUMBER_PEOPLE_ENUM {
@@ -74,12 +74,13 @@ enum HASHTAG {
   PET
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Board {
-
   id: String!
-
-  day: String!
-
   content: String!
   isShare: Boolean!
   mainCategory: MainCategory!
@@ -90,48 +91,125 @@ type Budget {
   amount: Int!
   totalAmount: Int!
   mainCategory: MainCategory!
+}
 
-type PointTransaction {
+type MoneyBook {
   id: String!
-  impuid: String!
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  time: String!
+  context: String!
+  memo: String!
   amount: Int!
+}
 
+enum SPENDING_CATEGORY_STATUS_ENUM {
+  FOOD
+  SHOPPING
+  TRANSPORTATION
+  TOURISM
+  STAY
+  ETC
+}
+
+type DetailSchedule {
+  id: String!
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
+  schedule: Schedule!
 }
 
 type Query {
-  fetchProducts: String!
-
+  fetchUser: User!
   fetchBudget(scheduleId: String!): [Budget!]!
-
   fetchPointHistory: [PointHistory!]!
-
+  fetchSchedules(page: Float = 1): [Schedule!]!
+  fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
+  fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
+  fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(userEmail: String!, updateUserInput: UpdateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
-
+  logout: String!
   createBudget(totalAmount: Float!, scheduleId: String!): Budget!
   updateBudget(totalAmount: Float!, scheduleId: String!): Budget!
   createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
   cancelPointTransaction(impUid: String!): PointTransaction!
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
-
-
+  uploadBannerImage(file: Upload!): String!
+  createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
+  createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
+  updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
+  createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
+  updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
+  deleteDetailSchedule(detailScheduleId: String!): Boolean!
 }
 
 input CreateUserInput {
   nickName: String!
   email: String!
   password: String!
+  mainCategoryId: String!
 }
 
 input UpdateUserInput {
   nickName: String
-  phoneNumber: Int
+  phoneNumber: String
   email: String
   password: String
   url: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input CreateScheduleInput {
+  title: String!
+  location: String!
+  startDate: String!
+  endDate: String!
+  numberPeople: NUMBER_PEOPLE_ENUM!
+  hashtag: HASHTAG!
+  mainCategoryId: String!
+}
+
+input CreateMoneyBookInput {
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  time: String!
+  context: String!
+  memo: String!
+}
+
+input UpdateMoneyBookInput {
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  amount: Int!
+  time: String!
+  context: String!
+  memo: String!
+}
+
+input CreateDetailScheduleInput {
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
+}
+
+input UpdateDetailScheduleInput {
+  date: String!
+  useTime: String!
+  place: String!
+  memo: String
 }

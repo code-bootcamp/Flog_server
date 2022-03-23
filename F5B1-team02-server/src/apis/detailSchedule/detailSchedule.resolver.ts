@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 import { DetailScheduleService } from './detailSchedule.service';
@@ -14,8 +14,22 @@ export class DetailScheduleResolver {
   ) {}
 
   @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [DetailSchedule])
+  async fetchDetailSchedules(
+    @CurrentUser() currentUser: ICurrentUser, //
+    @Args('scheduleId') scheduleId: string,
+    @Args('userId') userId: string,
+  ) {
+    return await this.detailScheduleService.findMyQt({
+      currentUser,
+      scheduleId,
+      userId,
+    });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => DetailSchedule)
-  async createdetailSchedule(
+  async createDetailSchedule(
     @CurrentUser() currentUser: ICurrentUser, //
     @Args('createDetailScheduleInput')
     createDetailScheduleInput: CreateDetailScheduleInput,

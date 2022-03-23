@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Schedule } from '../schedule/entities/schedule.entity';
 import { DetailSchedule } from './entities/detailSchedule.entity';
 // interface ICreate {
 //   createDetailScheduleInput: CreateDetailScheduleInput;
@@ -17,6 +18,31 @@ export class DetailScheduleService {
     @InjectRepository(DetailSchedule)
     private readonly detailScheduleRepository: Repository<DetailSchedule>,
   ) {}
+
+  async findMyQt({ currentUser, scheduleId, userId }) {
+    const myQts = await this.detailScheduleRepository
+      .createQueryBuilder()
+      .select('detail_schedule')
+      .from(DetailSchedule, 'detail_schedule')
+      .innerJoin('detail_schedule', 'schedule.id')
+      .where('detail_schedule.scheduleId = :scheduleId', {
+        scheduleId: scheduleId,
+      })
+      .orderBy({
+        'detail_schedule.date': 'DESC',
+        'detail_schedule.startTime': 'DESC',
+      })
+      .getMany();
+
+    if (currentUser.id !== userId) {
+      throw new HttpException(
+        '로그인id 와 scheduleId 의 유저 아이디가 같지 않습니다',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    } else {
+      return myQts;
+    }
+  }
 
   async findOne({ id }) {
     return await this.detailScheduleRepository.findOne({ id });

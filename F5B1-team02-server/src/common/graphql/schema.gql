@@ -129,6 +129,7 @@ type Query {
   fetchPointHistory: [PointHistory!]!
   fetchSchedules(page: Float = 1): [Schedule!]!
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
+  fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
 }
 
 type Mutation {
@@ -146,7 +147,7 @@ type Mutation {
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
-  createdetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
+  createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
   updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
   deleteDetailSchedule(detailScheduleId: String!): Boolean!
 }
@@ -206,7 +207,7 @@ input CreateDetailScheduleInput {
 }
 
 input UpdateDetailScheduleInput {
-  startTime: String!
+  date: String!
   useTime: String!
   place: String!
   memo: String

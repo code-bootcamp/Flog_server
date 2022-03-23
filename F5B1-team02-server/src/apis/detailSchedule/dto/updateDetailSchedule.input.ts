@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class UpdateDetailScheduleInput {
   @Field(() => String)
-  startTime?: string;
+  date?: string;
 
   @Field(() => String)
   useTime?: string;

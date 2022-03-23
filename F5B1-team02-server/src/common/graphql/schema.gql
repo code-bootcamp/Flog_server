@@ -147,6 +147,7 @@ type Mutation {
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createdetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
+  updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
 }
 
 input CreateUserInput {
@@ -197,6 +198,13 @@ input UpdateMoneyBookInput {
 input CreateDetailScheduleInput {
   day: String!
   date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
+}
+
+input UpdateDetailScheduleInput {
   startTime: String!
   useTime: String!
   place: String!

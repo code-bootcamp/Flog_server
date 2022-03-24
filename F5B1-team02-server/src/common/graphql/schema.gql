@@ -153,6 +153,7 @@ type Mutation {
   deleteDetailSchedule(detailScheduleId: String!): Boolean!
   createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
   updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
+  deleteBoard(scheduleId: String!): Boolean!
 }
 
 input CreateUserInput {

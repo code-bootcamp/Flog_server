@@ -14,7 +14,6 @@ export class BoardResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   async createBoard(
-    @CurrentUser() currentUser: ICurrentUser, //
     @Args('createBoardInput') createBoardInput: CreateBoardInput,
     @Args('scheduleId') scheduleId: string,
   ) {
@@ -26,13 +25,17 @@ export class BoardResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   async updateBoard(
-    @CurrentUser() currentUser: ICurrentUser, //
     @Args('updateBoardInput') updateBoardInput: UpdateBoardInput,
-    // @Args('scheduleId') scheduleId: string,
     @Args('boardId') boardId: string,
   ) {
     return await this.boardService.update(boardId, {
       ...updateBoardInput,
     });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
+  async deleteBoard(@Args('scheduleId') scheduleId: string) {
+    return await this.boardService.delete({ scheduleId });
   }
 }

@@ -13,6 +13,9 @@ export class BoardService {
   async findOne({ id }) {
     return await this.boardRepository.findOne({ id });
   }
+  // async findAll({ scheduleId }) {
+  //   return await this.boardRepository.find(scheduleId);
+  // }
   async create(scheduleId, { ...createBoardInput }) {
     return await this.boardRepository.save({
       ...createBoardInput,
@@ -28,5 +31,10 @@ export class BoardService {
       ...updateBoardInput,
     };
     return await this.boardRepository.save(newBoard);
+  }
+
+  async delete({ scheduleId }) {
+    const result = await this.boardRepository.delete({ schedule: scheduleId });
+    return result.affected ? true : false;
   }
 }

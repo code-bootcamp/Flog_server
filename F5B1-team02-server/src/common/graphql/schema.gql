@@ -81,9 +81,9 @@ scalar DateTime
 
 type Board {
   id: String!
+  day: String!
   content: String!
-  isShare: Boolean!
-  mainCategory: MainCategory!
+  schedule: Schedule!
 }
 
 type Budget {
@@ -151,6 +151,7 @@ type Mutation {
   createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
   updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
   deleteDetailSchedule(detailScheduleId: String!): Boolean!
+  createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
 }
 
 input CreateUserInput {
@@ -212,4 +213,9 @@ input UpdateDetailScheduleInput {
   useTime: String!
   place: String!
   memo: String
+}
+
+input CreateBoardInput {
+  day: String!
+  content: String!
 }

@@ -8,9 +8,9 @@ export class BannerImage {
   @Field(() => String)
   id: string;
 
-  @Column()
-  @Field(() => String)
-  url: string;
+  @Column({ default: null })
+  @Field(() => String, { nullable: true })
+  url?: string;
 
   @Column({ default: false })
   @Field(() => Boolean)

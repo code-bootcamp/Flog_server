@@ -19,6 +19,7 @@ import { AppService } from './app.service';
 import { MoneyBookModule } from './apis/moneyBook/moneyBook.module';
 import { DetailScheduleModule } from './apis/detailSchedule/detailSchedule.module';
 import { BoardModule } from './apis/board/board.module';
+import { ShareScheduleModule } from './apis/sharedList/sharedList.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { BoardModule } from './apis/board/board.module';
     MoneyBookModule,
     DetailScheduleModule,
     BoardModule,
+    ShareScheduleModule,
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

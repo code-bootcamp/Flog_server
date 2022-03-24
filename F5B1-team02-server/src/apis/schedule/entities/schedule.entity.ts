@@ -81,7 +81,7 @@ export class Schedule {
   // 배너이미지
   @JoinColumn()
   @OneToOne(() => BannerImage)
-  @Field(() => BannerImage)
+  @Field(() => BannerImage, { nullable: true })
   bannerImage: BannerImage;
 
   // 메인카테고리

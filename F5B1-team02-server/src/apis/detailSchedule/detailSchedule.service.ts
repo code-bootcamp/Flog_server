@@ -94,9 +94,9 @@ export class DetailScheduleService {
   }
 
   async delete({ detailScheduleId }) {
-    const detailIdInfo = await this.detailScheduleRepository.delete({
+    const result = await this.detailScheduleRepository.delete({
       id: detailScheduleId,
     });
-    return detailIdInfo.affected ? true : false;
+    return result.affected ? true : false;
   }
 }

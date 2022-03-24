@@ -137,6 +137,7 @@ type Query {
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
+  deleteUser(userEmail: String!): Boolean!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
   logout: String!

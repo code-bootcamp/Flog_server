@@ -60,4 +60,11 @@ export class UserResolver {
       updateUserInput,
     });
   }
+
+  // 회원탈퇴
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
+  async deleteUser(@Args('userEmail') userEmail: string) {
+    return await this.userService.delete({ userEmail });
+  }
 }

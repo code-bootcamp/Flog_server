@@ -37,7 +37,7 @@ export class ScheduleResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Schedule)
-  async shareSchedule(
+  async share(
     @Args('scheduleId') scheduleId: string, //
   ) {
     return await this.scheduleService.updateShare({ scheduleId });
@@ -45,7 +45,7 @@ export class ScheduleResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Schedule)
-  async unshareSchedule(
+  async unshare(
     @Args('scheduleId') scheduleId: string, //
   ) {
     return await this.scheduleService.updateUnshare({ scheduleId });

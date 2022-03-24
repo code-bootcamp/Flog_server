@@ -4,6 +4,7 @@ import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 import { BoardService } from './board.service';
 import { CreateBoardInput } from './dto/createBoard.input';
+import { UpdateBoardInput } from './dto/updateBoard.input';
 import { Board } from './entities/board.entity';
 
 @Resolver()
@@ -19,6 +20,19 @@ export class BoardResolver {
   ) {
     return await this.boardService.create(scheduleId, {
       ...createBoardInput,
+    });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Board)
+  async updateBoard(
+    @CurrentUser() currentUser: ICurrentUser, //
+    @Args('updateBoardInput') updateBoardInput: UpdateBoardInput,
+    // @Args('scheduleId') scheduleId: string,
+    @Args('boardId') boardId: string,
+  ) {
+    return await this.boardService.update(boardId, {
+      ...updateBoardInput,
     });
   }
 }

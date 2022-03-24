@@ -83,35 +83,4 @@ export class AuthResolver {
     }
     return '로그아웃에 성공했습니다.';
   }
-
-  // // 로그아웃
-  // @UseGuards(GqlAuthAccessGuard)
-  // @Mutation(() => String)
-  // async logout(
-  //   @Context() context: any,
-  //   @CurrentUser() currentUser: ICurrentUser, //
-  // ) {
-  //   const accessToken = context.req.headers.authorization.split(' ')[1];
-  //   const refreshToken = context.req.headers.cookie.split('=')[1];
-  //   let accessJwt;
-  //   let refreshJwt;
-
-  //   try {
-  //     accessJwt = jwt.verify(accessToken, 'myAccessKey');
-  //     refreshJwt = jwt.verify(refreshToken, 'myRefreshKey');
-  //   } catch (error) {
-  //     throw new UnauthorizedException(error);
-  //   }
-  //   const time = Math.floor(Date.now() / 1000); // 이해 NONO
-
-  //   await this.cacheManager.set(`accessToken:${accessToken}`, accessToken, {
-  //     ttl: accessJwt.exp - time,
-  //   });
-
-  //   await this.cacheManager.set(`refreshToken:${refreshToken}`, refreshToken, {
-  //     ttl: refreshJwt.exp - time,
-  //   });
-
-  //   return '로그아웃에 성공했습니다';
-  // }
 }

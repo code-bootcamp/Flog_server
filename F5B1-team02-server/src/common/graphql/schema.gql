@@ -50,6 +50,7 @@ type Schedule {
   location: String!
   startDate: String!
   endDate: String!
+  isShare: String!
   numberPeople: NUMBER_PEOPLE_ENUM!
   hashtag: HASHTAG!
   user: User!
@@ -148,6 +149,8 @@ type Mutation {
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
   uploadBannerImage(file: Upload!): String!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
+  shareSchedule(scheduleId: String!): Schedule!
+  unshareSchedule(scheduleId: String!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!

@@ -58,4 +58,18 @@ export class ScheduleService {
       mainCategory: result,
     });
   }
+
+  async updateShare({ scheduleId }) {
+    const result = await this.scheduleRepository.findOne({ id: scheduleId });
+    const shareUpdate = { ...result, isShare: '1' };
+
+    return await this.scheduleRepository.save(shareUpdate);
+  }
+
+  async updateUnshare({ scheduleId }) {
+    const result = await this.scheduleRepository.findOne({ id: scheduleId });
+    const unshareUpdate = { ...result, isShare: '0' };
+
+    return await this.scheduleRepository.save(unshareUpdate);
+  }
 }

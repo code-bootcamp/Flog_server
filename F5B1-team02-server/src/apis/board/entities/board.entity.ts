@@ -29,16 +29,6 @@ export class Board {
   @CreateDateColumn()
   createAt: Date;
 
-  // // 공유여부
-  // @Column({ default: false })
-  // @Field(() => Boolean)
-  // isShare: boolean;
-
-  // // 공유일자
-  // @Column({ default: false })
-  // @Field(() => String, { nullable: true })
-  // shareDate: String;
-
   // 일정
   @ManyToOne(() => Schedule, { cascade: true, onDelete: 'CASCADE' })
   @Field(() => Schedule)

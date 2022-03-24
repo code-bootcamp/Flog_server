@@ -12,7 +12,6 @@ export class ScheduleResolver {
     private readonly scheduleService: ScheduleService, //
   ) {}
 
-  // 나의 여행목록 리스트
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [Schedule])
   async fetchSchedules(
@@ -22,7 +21,6 @@ export class ScheduleResolver {
     return await this.scheduleService.findMyQt({ currentUser, page });
   }
 
-  // 새 일정만들기
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Schedule)
   async createSchedule(
@@ -35,5 +33,21 @@ export class ScheduleResolver {
       id,
       createScheduleInput,
     });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Schedule)
+  async shareSchedule(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.scheduleService.updateShare({ scheduleId });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Schedule)
+  async unshareSchedule(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.scheduleService.updateUnshare({ scheduleId });
   }
 }

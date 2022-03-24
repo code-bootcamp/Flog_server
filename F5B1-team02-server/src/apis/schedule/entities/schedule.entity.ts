@@ -58,6 +58,11 @@ export class Schedule {
   @Field(() => String)
   endDate: String;
 
+  // 공유여부
+  @Column({ default: 0 })
+  @Field(() => String)
+  isShare: String;
+
   // 인원수
   @Column({ type: 'enum', enum: NUMBER_PEOPLE_ENUM })
   @Field(() => NUMBER_PEOPLE_ENUM)

@@ -1,7 +1,6 @@
-import { Query, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
-import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 import { BoardService } from './board.service';
 import { CreateBoardInput } from './dto/createBoard.input';
 import { UpdateBoardInput } from './dto/updateBoard.input';
@@ -11,6 +10,13 @@ import { Board } from './entities/board.entity';
 export class BoardResolver {
   constructor(private readonly boardService: BoardService) {}
 
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [Board])
+  async fetchBoard(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.boardService.findMyQt({ scheduleId });
+  }
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   async createBoard(

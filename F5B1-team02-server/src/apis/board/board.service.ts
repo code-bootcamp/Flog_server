@@ -13,9 +13,7 @@ export class BoardService {
   async findOne({ id }) {
     return await this.boardRepository.findOne({ id });
   }
-  // async findAll({ scheduleId }) {
-  //   return await this.boardRepository.find(scheduleId);
-  // }
+
   async create(scheduleId, { ...createBoardInput }) {
     return await this.boardRepository.save({
       ...createBoardInput,
@@ -36,5 +34,19 @@ export class BoardService {
   async delete({ scheduleId }) {
     const result = await this.boardRepository.delete({ schedule: scheduleId });
     return result.affected ? true : false;
+  }
+
+  async findMyQt({ scheduleId }) {
+    const myQts = await this.boardRepository
+      .createQueryBuilder()
+      .select('board')
+      .from(Board, 'board')
+      .where('board.scheduleId = :scheduleId', {
+        scheduleId: scheduleId,
+      })
+      .orderBy('board.day', 'ASC')
+      .getMany();
+
+    return myQts;
   }
 }

@@ -131,6 +131,7 @@ type Query {
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
   fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
+  fetchBoard(scheduleId: String!): [Board!]!
 }
 
 type Mutation {

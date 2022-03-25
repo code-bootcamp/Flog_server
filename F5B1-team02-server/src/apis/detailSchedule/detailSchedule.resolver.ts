@@ -20,7 +20,7 @@ export class DetailScheduleResolver {
     @Args('scheduleId') scheduleId: string,
     @Args('userId') userId: string,
   ) {
-    return await this.detailScheduleService.findMyQt({
+    return await this.detailScheduleService.findMyQts({
       currentUser,
       scheduleId,
       userId,
@@ -35,7 +35,7 @@ export class DetailScheduleResolver {
     @Args('userId') userId: string,
     @Args('day') day: string,
   ) {
-    return await this.detailScheduleService.findMyQt1({
+    return await this.detailScheduleService.findMyQtDay({
       currentUser,
       scheduleId,
       userId,

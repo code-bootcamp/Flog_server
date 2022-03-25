@@ -14,7 +14,7 @@ export class ShareScheduleService {
     private readonly boardRepository: Repository<Board>,
   ) {}
 
-  async findMyQt({ page }) {
+  async findMyQtList({ page }) {
     const myQts = await this.scheduleRepository
       .createQueryBuilder('schedule')
       .innerJoinAndSelect('schedule.user', 'user')
@@ -27,7 +27,7 @@ export class ShareScheduleService {
     return myQts;
   }
 
-  async findMyQt1({ scheduleId }) {
+  async findMyQtBoard({ scheduleId }) {
     const shareSchedule = await this.boardRepository
       .createQueryBuilder()
       .select('board')

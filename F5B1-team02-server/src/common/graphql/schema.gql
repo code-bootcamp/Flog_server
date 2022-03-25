@@ -51,7 +51,7 @@ type Schedule {
   startDate: String!
   endDate: String!
   isShare: String!
-  numberPeople: NUMBER_PEOPLE_ENUM!
+  numberPeople: NUMBER_PEOPLE_ENUM
   hashtag: HASHTAG!
   user: User!
   bannerImage: BannerImage
@@ -134,6 +134,7 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
+  fetchSearch(search: String!): [Schedule!]!
 }
 
 type Mutation {
@@ -185,7 +186,7 @@ input CreateScheduleInput {
   location: String!
   startDate: String!
   endDate: String!
-  numberPeople: NUMBER_PEOPLE_ENUM!
+  numberPeople: NUMBER_PEOPLE_ENUM
   hashtag: HASHTAG!
   mainCategoryId: String!
 }

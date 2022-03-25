@@ -47,7 +47,7 @@ import { ShareScheduleModule } from './apis/sharedList/sharedList.module';
       host: 'my_database',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: '1234',
       database: 'flog',
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,

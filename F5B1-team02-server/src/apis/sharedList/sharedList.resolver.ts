@@ -14,7 +14,7 @@ export class ShareScheduleResolver {
   async fetchShareSchedules(
     @Args('page', { defaultValue: 1 }) page: number, //
   ) {
-    return await this.shareScheduleService.findMyQt({ page });
+    return await this.shareScheduleService.findMyQtList({ page });
   }
 
   // 족보 조회
@@ -22,6 +22,6 @@ export class ShareScheduleResolver {
   async fetchBoard(
     @Args('scheduleId') scheduleId: string, //
   ) {
-    return await this.shareScheduleService.findMyQt1({ scheduleId });
+    return await this.shareScheduleService.findMyQtBoard({ scheduleId });
   }
 }

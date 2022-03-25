@@ -142,9 +142,10 @@ export class PointTransactionService {
     }
   }
   async checkPoint({ currentUser }) {
-    const pointTransacion = await this.pointTransactionRepository.findOne({
-      user: { id: currentUser.id },
-    });
+    const pointTransacion = await this.pointTransactionRepository.findOne(
+      { user: { id: currentUser.id } },
+      { lock: { mode: 'pessimistic_write' } },
+    );
     const user = await this.userRepository.findOne({ id: currentUser.id });
     if (user.point < pointTransacion.amount)
       throw new UnprocessableEntityException('포인트 부족');

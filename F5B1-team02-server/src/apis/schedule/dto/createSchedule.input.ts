@@ -16,7 +16,7 @@ export class CreateScheduleInput {
   endDate: string;
 
   // 인원수
-  @Field(() => NUMBER_PEOPLE_ENUM)
+  @Field(() => NUMBER_PEOPLE_ENUM, { nullable: true })
   numberPeople: NUMBER_PEOPLE_ENUM;
 
   // 해시태그

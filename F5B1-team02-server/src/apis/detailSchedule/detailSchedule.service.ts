@@ -29,8 +29,8 @@ export class DetailScheduleService {
         scheduleId: scheduleId,
       })
       .orderBy({
-        'detail_schedule.date': 'DESC',
-        'detail_schedule.startTime': 'DESC',
+        'detail_schedule.date': 'ASC',
+        'detail_schedule.startTime': 'ASC',
       })
       .getMany();
 
@@ -94,9 +94,9 @@ export class DetailScheduleService {
   }
 
   async delete({ detailScheduleId }) {
-    const detailIdInfo = await this.detailScheduleRepository.delete({
+    const result = await this.detailScheduleRepository.delete({
       id: detailScheduleId,
     });
-    return detailIdInfo.affected ? true : false;
+    return result.affected ? true : false;
   }
 }

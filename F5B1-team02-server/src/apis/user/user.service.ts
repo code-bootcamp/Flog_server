@@ -12,15 +12,6 @@ import { UpdateUserInput } from './dto/updateUser.input';
 import * as bcrypt from 'bcrypt';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 
-// interface ICreate {
-//   createUserInput: CreateUserInput;
-// }
-// interface IUpdate {
-//   email: string;
-//   updateUserInput: UpdateUserInput;
-//   hashedPassword: string;
-// }
-
 @Injectable()
 export class UserService {
   constructor(
@@ -60,5 +51,10 @@ export class UserService {
     const newUser = { ...user, ...updateUserInput, password }; // 순서
     console.log(newUser);
     return await this.userRepository.save(newUser);
+  }
+
+  async delete({ userEmail }) {
+    const result = await this.userRepository.delete({ email: userEmail });
+    return result.affected ? true : false;
   }
 }

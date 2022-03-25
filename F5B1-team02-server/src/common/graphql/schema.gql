@@ -40,7 +40,7 @@ enum POINT_TRANSACTION_STATUS_ENUM {
 
 type BannerImage {
   id: String!
-  url: String!
+  url: String
   isImage: Boolean!
 }
 
@@ -50,10 +50,11 @@ type Schedule {
   location: String!
   startDate: String!
   endDate: String!
+  isShare: String!
   numberPeople: NUMBER_PEOPLE_ENUM!
   hashtag: HASHTAG!
   user: User!
-  bannerImage: BannerImage!
+  bannerImage: BannerImage
   mainCategory: MainCategory!
   createAt: DateTime!
 }
@@ -81,9 +82,9 @@ scalar DateTime
 
 type Board {
   id: String!
+  day: String!
   content: String!
-  isShare: Boolean!
-  mainCategory: MainCategory!
+  schedule: Schedule!
 }
 
 type Budget {
@@ -131,11 +132,14 @@ type Query {
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
   fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
+  fetchBoard(scheduleId: String!): [Board!]!
+  fetchShareSchedules(page: Float = 1): [Schedule!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
+  deleteUser(userEmail: String!): Boolean!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
   logout: String!
@@ -146,11 +150,16 @@ type Mutation {
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
   uploadBannerImage(file: Upload!): String!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
+  share(scheduleId: String!): Schedule!
+  unshare(scheduleId: String!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
   updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
   deleteDetailSchedule(detailScheduleId: String!): Boolean!
+  createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
+  updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
+  deleteBoard(scheduleId: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -212,4 +221,13 @@ input UpdateDetailScheduleInput {
   useTime: String!
   place: String!
   memo: String
+}
+
+input CreateBoardInput {
+  day: String!
+  content: String!
+}
+
+input UpdateBoardInput {
+  content: String!
 }

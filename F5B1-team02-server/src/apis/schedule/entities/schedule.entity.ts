@@ -65,7 +65,7 @@ export class Schedule {
 
   // 인원수
   @Column({ type: 'enum', enum: NUMBER_PEOPLE_ENUM })
-  @Field(() => NUMBER_PEOPLE_ENUM)
+  @Field(() => NUMBER_PEOPLE_ENUM, { nullable: true })
   numberPeople: NUMBER_PEOPLE_ENUM;
 
   // 해시태그

@@ -14,4 +14,11 @@ export class ShareScheduleResolver {
   ) {
     return await this.shareScheduleService.findMyQt({ page });
   }
+
+  @Query(() => Schedule)
+  async fetchShareSchedule(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.shareScheduleService.findMyQt1({ scheduleId });
+  }
 }

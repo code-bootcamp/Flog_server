@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from '../board/entities/board.entity';
+import { DetailSchedule } from '../detailSchedule/entities/detailSchedule.entity';
 import { Schedule } from '../schedule/entities/schedule.entity';
 
 interface IFindOne {
@@ -13,6 +14,8 @@ export class ShareScheduleService {
   constructor(
     @InjectRepository(Schedule)
     private readonly scheduleRepository: Repository<Schedule>,
+    @InjectRepository(Board)
+    private readonly boardRepository: Repository<Board>,
   ) {}
 
   async findMyQt({ page }) {
@@ -34,15 +37,35 @@ export class ShareScheduleService {
   //     });
   //   }
 
+  // async findMyQt1({ scheduleId }) {
+  //   const shareSchedule = await this.scheduleRepository
+  //     .createQueryBuilder('board')
+  //     .innerJoinAndSelect('board.schedule', 'schedule')
+  //     //   .select('board')
+  //     .from(Board, 'board')
+  //     .addFrom(Schedule, 'schedule')
+  //     //   .innerJoin('board.scheduleId', 'schedule')
+  //     .where('board.scheduleId = :scheduleId', { scheduleId: scheduleId })
+  //     .orderBy({
+  //       'board.day': 'ASC',
+  //     })
+  //     .getMany();
+
+  //   return shareSchedule;
+  // }
   async findMyQt1({ scheduleId }) {
-    const shareSchedule = await this.scheduleRepository
-      .createQueryBuilder('board')
-      .innerJoinAndSelect('board.schedule', 'schedule')
-      //   .select('board')
+    const shareSchedule = await this.boardRepository
+      .createQueryBuilder()
+      .select('board')
+      .addSelect('schedule')
       .from(Board, 'board')
-      .addFrom(Schedule, 'schedule')
-      //   .innerJoin('board.scheduleId', 'schedule')
-      .where('board.scheduleId = :scheduleId', { scheduleId: scheduleId })
+      .innerJoin('board.schedule', 'schedule')
+      .where('board.schedule = :scheduleId', {
+        scheduleId: scheduleId,
+      })
+      .andWhere('schedule.isShare = :isShare', {
+        isShare: '1',
+      })
       .orderBy({
         'board.day': 'ASC',
       })

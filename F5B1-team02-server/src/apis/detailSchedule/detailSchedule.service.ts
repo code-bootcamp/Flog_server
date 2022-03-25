@@ -19,7 +19,7 @@ export class DetailScheduleService {
     private readonly detailScheduleRepository: Repository<DetailSchedule>,
   ) {}
 
-  async findMyQt({ currentUser, scheduleId, userId }) {
+  async findMyQts({ currentUser, scheduleId, userId }) {
     const myQts = await this.detailScheduleRepository
       .createQueryBuilder()
       .select('detail_schedule')
@@ -44,7 +44,7 @@ export class DetailScheduleService {
     }
   }
 
-  async findMyQt1({ currentUser, scheduleId, userId, day }) {
+  async findMyQtDay({ currentUser, scheduleId, userId, day }) {
     const myQts = await this.detailScheduleRepository
       .createQueryBuilder()
       .select('detail_schedule')

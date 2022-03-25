@@ -1,6 +1,7 @@
 import { CACHE_MANAGER, Inject } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Board } from '../board/entities/board.entity';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { ShareScheduleService } from './sharedList.service';
 import { Cache } from 'cache-manager';
@@ -14,11 +15,20 @@ export class ShareScheduleResolver {
     private readonly cacheManager: Cache,
   ) {}
 
+  //족보 리스트 조회
   @Query(() => [Schedule])
   async fetchShareSchedules(
     @Args('page', { defaultValue: 1 }) page: number, //
   ) {
-    return await this.shareScheduleService.findMyQt({ page });
+    return await this.shareScheduleService.findMyQtList({ page });
+  }
+
+  // 족보 조회
+  @Query(() => [Board])
+  async fetchBoard(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.shareScheduleService.findMyQtBoard({ scheduleId });
   }
 
   @Query(() => [Schedule])

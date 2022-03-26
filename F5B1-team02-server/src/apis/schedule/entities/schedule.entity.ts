@@ -1,5 +1,4 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { BannerImage } from 'src/apis/bannerImage/entities/bannerImage.entity';
 import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
 import { User } from 'src/apis/user/entities/user.entity';
 import {
@@ -82,12 +81,6 @@ export class Schedule {
   @ManyToOne(() => User, { cascade: true, onDelete: 'CASCADE' })
   @Field(() => User)
   user: User;
-
-  // // 배너이미지
-  // @JoinColumn()
-  // @OneToOne(() => BannerImage)
-  // @Field(() => BannerImage, { nullable: true })
-  // bannerImage: BannerImage;
 
   // 메인카테고리
   @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })

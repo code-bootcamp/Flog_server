@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from './entities/board.entity';
+import { Storage } from '@google-cloud/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { getToday } from 'src/libraries/utils';
 
 @Injectable()
 export class BoardService {
@@ -48,5 +51,26 @@ export class BoardService {
       .getMany();
 
     return myQts;
+  }
+
+  async upload({ file }) {
+    const storage = new Storage({
+      keyFilename: process.env.STORAGE_KEY_FILENAME,
+      projectId: process.env.STORAGE_PROJECT_ID,
+    }).bucket(process.env.STORAGE_BUCKET);
+
+    const fname = `board/${getToday()}/${uuidv4()}/${file.filename}`;
+    const imageUrl = await new Promise((resolve, reject) => {
+      file
+        .createReadStream()
+        .pipe(storage.file(fname).createWriteStream())
+        .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
+        .on('error', (error) => reject('error: ' + error));
+    });
+    console.log('=============imageUrl==========================');
+    console.log(imageUrl);
+    console.log('===============================================');
+
+    return imageUrl;
   }
 }

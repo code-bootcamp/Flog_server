@@ -5,7 +5,7 @@ import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { BannerImageService } from './bannerImage.service';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { scheduled } from 'rxjs';
-import { updateBannerImageInput } from './dto/updateBannerImage.Input';
+import { updateBannerImageInput } from './dto/updateBannerImage.input';
 
 @Resolver()
 export class BannerImageResolver {

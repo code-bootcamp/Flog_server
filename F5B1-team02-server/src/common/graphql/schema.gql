@@ -145,7 +145,7 @@ type Mutation {
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
   uploadBannerImagefile(file: Upload!): String!
   deleteBannerImagefile(scheduleId: String!): String!
-  updateBannerImage(scheduleId: String!, updateBannerImageInput: UpdateBannerImageInput!): Schedule!
+  updateBannerImage(scheduleId: String!, updateBannerImageInput: updateBannerImageInput!): Schedule!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
   share(scheduleId: String!): Schedule!
   unshare(scheduleId: String!): Schedule!
@@ -157,6 +157,7 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
   updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
   deleteBoard(scheduleId: String!): Boolean!
+  uploadBoardImagefile(file: Upload!): String!
 }
 
 input CreateUserInput {
@@ -177,9 +178,8 @@ input UpdateUserInput {
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
-input UpdateBannerImageInput {
-  url: String!
-  isImage: Boolean = true
+input updateBannerImageInput {
+  url: String = "true"
 }
 
 input CreateScheduleInput {

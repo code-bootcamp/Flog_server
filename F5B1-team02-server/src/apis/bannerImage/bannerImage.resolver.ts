@@ -9,14 +9,6 @@ import { BannerImage } from './entities/bannerImage.entity';
 export class BannerImageResolver {
   constructor(private readonly bannerImageService: BannerImageService) {}
 
-  // @UseGuards(GqlAuthAccessGuard)
-  // @Mutation(() => BannerImage)
-  // async uploadBannerImage(
-  //   @Args('scheduleId') scheduleId: string,
-  //   @Args({ name: 'imageURL', type: () => String }) imageURL: string,
-  // ) {
-  //   return await this.bannerImageService.create({ scheduleId, imageURL });
-  // }
   @Mutation(() => String)
   async uploadBannerImage(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,

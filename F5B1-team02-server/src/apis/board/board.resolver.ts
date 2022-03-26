@@ -46,7 +46,7 @@ export class BoardResolver {
     return await this.boardService.delete({ scheduleId });
   }
 
-  // @UseGuards(GqlAuthAccessGuard)
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   async uploadBoardImagefile(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,

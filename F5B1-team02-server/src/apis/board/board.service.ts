@@ -86,7 +86,10 @@ export class BoardService {
       .file(fileName)
       .delete();
 
+    console.log('=========================================================');
     console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
+    console.log('=========================================================');
+
     return result ? true : false;
   }
 }

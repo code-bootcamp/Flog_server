@@ -81,4 +81,20 @@ export class UserService {
 
     return imageUrl;
   }
+
+  async deleteImageFile({ url }) {
+    const spliturl = url.split(`${process.env.STORAGE_BUCKET}/`);
+    const fileName = spliturl[spliturl.length - 1];
+    const storage = new Storage({
+      keyFilename: process.env.STORAGE_KEY_FILENAME,
+      projectId: process.env.STORAGE_PROJECT_ID,
+    });
+    const result = await storage
+      .bucket(process.env.STORAGE_BUCKET)
+      .file(fileName)
+      .delete();
+
+    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
+    return result ? true : false;
+  }
 }

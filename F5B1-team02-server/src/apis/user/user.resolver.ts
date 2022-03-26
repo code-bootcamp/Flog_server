@@ -76,4 +76,12 @@ export class UserResolver {
   ) {
     return await this.userService.upload({ file });
   }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  async deleteProfileImagefile(
+    @Args('url') url: string, //
+  ) {
+    return await this.userService.deleteImageFile({ url });
+  }
 }

@@ -136,6 +136,7 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   deleteUser(userEmail: String!): Boolean!
   uploadProfileImagefile(file: Upload!): String!
+  deleteProfileImagefile(url: String!): String!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
   logout: String!

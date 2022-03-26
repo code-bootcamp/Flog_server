@@ -38,4 +38,16 @@ export class BannerImageService {
 
     return imageUrl;
   }
+
+  async update({ scheduleId, updateBannerImageInput }) {
+    const scheduleInfo = await this.scheduleRepositroy.findOne({
+      id: scheduleId,
+    });
+
+    const newUrl = {
+      ...scheduleInfo,
+      ...updateBannerImageInput,
+    };
+    return await this.scheduleRepositroy.save(newUrl);
+  }
 }

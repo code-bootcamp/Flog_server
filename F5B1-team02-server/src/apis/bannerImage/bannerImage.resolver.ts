@@ -18,4 +18,16 @@ export class BannerImageResolver {
   ) {
     return await this.bannerImageService.upload({ file });
   }
+
+  @Mutation(() => Schedule)
+  async updateBannerImage(
+    @Args('scheduleId') scheduleId: string,
+    @Args('updateBannerImageInput')
+    updateBannerImageInput: UpdateBannerImageInput,
+  ) {
+    return await this.bannerImageService.update({
+      scheduleId,
+      updateBannerImageInput,
+    });
+  }
 }

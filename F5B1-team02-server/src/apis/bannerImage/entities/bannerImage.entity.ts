@@ -22,12 +22,12 @@ export class BannerImage {
 
   @Column({ default: false })
   @Field(() => Boolean, { nullable: true })
-  isImage?: boolean;
+  isImage: boolean;
 
-  // 일정ID
-  // @JoinColumn()
-  // @OneToOne(() => Schedule)
-  @ManyToOne(() => Schedule, { cascade: true, onDelete: 'CASCADE' })
-  @Field(() => Schedule)
-  schedule: Schedule;
+  // // 일정ID
+  // // @JoinColumn()
+  // // @OneToOne(() => Schedule)
+  // @ManyToOne(() => Schedule, { cascade: true, onDelete: 'CASCADE' })
+  // @Field(() => Schedule)
+  // schedule: Schedule;
 }

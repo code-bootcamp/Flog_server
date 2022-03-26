@@ -7,10 +7,7 @@ import { Repository } from 'typeorm';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { getToday } from 'src/libraries/utils';
 import { v4 as uuidv4 } from 'uuid';
-
-interface IFile {
-  file: FileUpload;
-}
+import { UpdateBannerImageInput } from './dto/updateBannerImage.Input';
 
 @Injectable()
 export class BannerImageService {
@@ -20,6 +17,7 @@ export class BannerImageService {
     @InjectRepository(Schedule)
     private readonly scheduleRepositroy: Repository<Schedule>,
   ) {}
+
   async upload({ file }) {
     const storage = new Storage({
       keyFilename: process.env.STORAGE_KEY_FILENAME,
@@ -27,14 +25,17 @@ export class BannerImageService {
     }).bucket(process.env.STORAGE_BUCKET);
 
     const fname = `${getToday()}/${uuidv4()}/origin/${file.filename}`;
-    const url = await new Promise((resolve, reject) => {
+    const imageUrl = await new Promise((resolve, reject) => {
       file
         .createReadStream()
         .pipe(storage.file(fname).createWriteStream())
         .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
         .on('error', (error) => reject('error: ' + error));
     });
+    console.log('=============imageUrl==========================');
+    console.log(imageUrl);
+    console.log('===============================================');
 
-    return url;
+    return imageUrl;
   }
 }

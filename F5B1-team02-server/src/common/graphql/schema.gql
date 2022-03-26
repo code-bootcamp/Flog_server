@@ -44,6 +44,7 @@ type Schedule {
   location: String!
   startDate: String!
   endDate: String!
+  url: String
   isShare: String!
   numberPeople: NUMBER_PEOPLE_ENUM
   hashtag: HASHTAG!
@@ -85,13 +86,6 @@ type Budget {
   amount: Int!
   totalAmount: Int!
   mainCategory: MainCategory!
-}
-
-type BannerImage {
-  id: String!
-  url: String
-  isImage: Boolean
-  schedule: Schedule!
 }
 
 type MoneyBook {
@@ -149,8 +143,9 @@ type Mutation {
   createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
   cancelPointTransaction(impUid: String!): PointTransaction!
   paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
-  uploadBannerImage(file: Upload!): String!
-  updateBannerImage(scheduleId: String!, url: String!): BannerImage!
+  uploadBannerImagefile(file: Upload!): String!
+  deleteBannerImagefile(scheduleId: String!): String!
+  updateBannerImage(scheduleId: String!, updateBannerImageInput: UpdateBannerImageInput!): Schedule!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
   share(scheduleId: String!): Schedule!
   unshare(scheduleId: String!): Schedule!
@@ -181,6 +176,11 @@ input UpdateUserInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input UpdateBannerImageInput {
+  url: String!
+  isImage: Boolean = true
+}
 
 input CreateScheduleInput {
   title: String!

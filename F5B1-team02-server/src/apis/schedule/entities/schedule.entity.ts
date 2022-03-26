@@ -58,6 +58,11 @@ export class Schedule {
   @Field(() => String)
   endDate: String;
 
+  // 배너이미지
+  @Column({ default: null })
+  @Field(() => String, { nullable: true })
+  url?: string;
+
   // 공유여부
   @Column({ default: 0 })
   @Field(() => String)

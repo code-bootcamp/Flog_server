@@ -6,5 +6,5 @@ export class UpdateBannerImageInput {
   url: string;
 
   @Field(() => Boolean, { defaultValue: true })
-  isImage: boolean;
+  isImage?: boolean;
 }

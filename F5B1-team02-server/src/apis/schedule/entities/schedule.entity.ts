@@ -78,11 +78,11 @@ export class Schedule {
   @Field(() => User)
   user: User;
 
-  // 배너이미지
-  @JoinColumn()
-  @OneToOne(() => BannerImage)
-  @Field(() => BannerImage, { nullable: true })
-  bannerImage: BannerImage;
+  // // 배너이미지
+  // @JoinColumn()
+  // @OneToOne(() => BannerImage)
+  // @Field(() => BannerImage, { nullable: true })
+  // bannerImage: BannerImage;
 
   // 메인카테고리
   @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })

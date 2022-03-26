@@ -5,12 +5,13 @@ import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { BannerImageService } from './bannerImage.service';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { scheduled } from 'rxjs';
-import { UpdateBannerImageInput } from './dto/updateBannerImage.Input';
+import { updateBannerImageInput } from './dto/updateBannerImage.Input';
 
 @Resolver()
 export class BannerImageResolver {
   constructor(private readonly bannerImageService: BannerImageService) {}
 
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   async uploadBannerImagefile(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
@@ -18,6 +19,7 @@ export class BannerImageResolver {
     return await this.bannerImageService.upload({ file });
   }
 
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   async deleteBannerImagefile(
     @Args('scheduleId') scheduleId: string, //
@@ -25,11 +27,12 @@ export class BannerImageResolver {
     return await this.bannerImageService.deleteImageFile({ scheduleId });
   }
 
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Schedule)
   async updateBannerImage(
     @Args('scheduleId') scheduleId: string,
     @Args('updateBannerImageInput')
-    updateBannerImageInput: UpdateBannerImageInput,
+    updateBannerImageInput: updateBannerImageInput,
   ) {
     return await this.bannerImageService.update({
       scheduleId,

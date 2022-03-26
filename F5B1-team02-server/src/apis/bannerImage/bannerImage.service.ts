@@ -2,18 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { FileUpload } from 'graphql-upload';
 import { Storage } from '@google-cloud/storage';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BannerImage } from './entities/bannerImage.entity';
 import { Repository } from 'typeorm';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { getToday } from 'src/libraries/utils';
 import { v4 as uuidv4 } from 'uuid';
-import { UpdateBannerImageInput } from './dto/updateBannerImage.Input';
 
 @Injectable()
 export class BannerImageService {
   constructor(
-    @InjectRepository(BannerImage)
-    private readonly bannerImageRepositroy: Repository<BannerImage>,
     @InjectRepository(Schedule)
     private readonly scheduleRepositroy: Repository<Schedule>,
   ) {}

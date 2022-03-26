@@ -57,8 +57,26 @@ export class UserService {
   }
 
   async delete({ userEmail }) {
-    const result = await this.userRepository.delete({ email: userEmail });
-    return result.affected ? true : false;
+    const userInfo = await this.userRepository.findOne({ email: userEmail });
+    const spliturl = userInfo.url.split(`${process.env.STORAGE_BUCKET}/`);
+    const fileName = spliturl[spliturl.length - 1];
+    const storage = new Storage({
+      keyFilename: process.env.STORAGE_KEY_FILENAME,
+      projectId: process.env.STORAGE_PROJECT_ID,
+    });
+
+    const result = await storage
+      .bucket(process.env.STORAGE_BUCKET)
+      .file(fileName)
+      .delete();
+
+    console.log('================================================');
+    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
+    console.log('================================================');
+
+    await this.userRepository.delete({ email: userEmail });
+
+    return result ? true : false;
   }
 
   async upload({ file }) {

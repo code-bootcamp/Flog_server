@@ -81,7 +81,6 @@ export class UserResolver {
   @Mutation(() => String)
   async deleteProfileImagefile(
     @Args('userId') userId: string, //
-    // @Args('url') url: string, //
   ) {
     return await this.userService.deleteImageFile({ userId });
   }

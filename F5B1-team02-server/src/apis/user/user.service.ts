@@ -11,6 +11,9 @@ import { CreateUserInput } from './dto/createUser.input';
 import { UpdateUserInput } from './dto/updateUser.input';
 import * as bcrypt from 'bcrypt';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
+import { Storage } from '@google-cloud/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { getToday } from 'src/libraries/utils';
 
 @Injectable()
 export class UserService {
@@ -56,5 +59,26 @@ export class UserService {
   async delete({ userEmail }) {
     const result = await this.userRepository.delete({ email: userEmail });
     return result.affected ? true : false;
+  }
+
+  async upload({ file }) {
+    const storage = new Storage({
+      keyFilename: process.env.STORAGE_KEY_FILENAME,
+      projectId: process.env.STORAGE_PROJECT_ID,
+    }).bucket(process.env.STORAGE_BUCKET);
+
+    const fname = `profile/${getToday()}/${uuidv4()}/${file.filename}`;
+    const imageUrl = await new Promise((resolve, reject) => {
+      file
+        .createReadStream()
+        .pipe(storage.file(fname).createWriteStream())
+        .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
+        .on('error', (error) => reject('error: ' + error));
+    });
+    console.log('=============imageUrl==========================');
+    console.log(imageUrl);
+    console.log('===============================================');
+
+    return imageUrl;
   }
 }

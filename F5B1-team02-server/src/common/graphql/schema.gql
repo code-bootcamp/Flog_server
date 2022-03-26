@@ -13,7 +13,7 @@ type User {
   nickName: String!
   phoneNumber: String
   point: Int!
-  url: String!
+  url: String
   mainCategory: MainCategory!
 }
 
@@ -135,6 +135,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   deleteUser(userEmail: String!): Boolean!
+  uploadProfileImagefile(file: Upload!): String!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
   logout: String!

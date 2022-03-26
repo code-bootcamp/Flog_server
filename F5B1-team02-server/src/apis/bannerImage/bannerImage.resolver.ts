@@ -11,12 +11,18 @@ import { UpdateBannerImageInput } from './dto/updateBannerImage.Input';
 export class BannerImageResolver {
   constructor(private readonly bannerImageService: BannerImageService) {}
 
-  // 구글 스토리지 파일 업로드
   @Mutation(() => String)
   async uploadBannerImagefile(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
   ) {
     return await this.bannerImageService.upload({ file });
+  }
+
+  @Mutation(() => String)
+  async deleteBannerImagefile(
+    @Args('scheduleId') scheduleId: string, //
+  ) {
+    return await this.bannerImageService.deleteImageFile({ scheduleId });
   }
 
   @Mutation(() => Schedule)

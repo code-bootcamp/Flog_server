@@ -39,6 +39,28 @@ export class BannerImageService {
     return imageUrl;
   }
 
+  async deleteImageFile({ scheduleId }) {
+    const deleteFile = await this.scheduleRepositroy.findOne({
+      id: scheduleId,
+    });
+    const { url, ...schedule } = deleteFile;
+
+    const spliturl = deleteFile.url.split(`${process.env.STORAGE_BUCKET}/`);
+    const fileName = spliturl[spliturl.length - 1];
+    const storage = new Storage({
+      keyFilename: process.env.STORAGE_KEY_FILENAME,
+      projectId: process.env.STORAGE_PROJECT_ID,
+    });
+    const result = await storage
+      .bucket(process.env.STORAGE_BUCKET)
+      .file(fileName)
+      .delete();
+
+    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
+    await this.scheduleRepositroy.save({ ...schedule, url: null });
+    return result ? true : false;
+  }
+
   async update({ scheduleId, updateBannerImageInput }) {
     const scheduleInfo = await this.scheduleRepositroy.findOne({
       id: scheduleId,

@@ -53,4 +53,12 @@ export class BoardResolver {
   ) {
     return await this.boardService.upload({ file });
   }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  async deleteBoardImagefile(
+    @Args('url') url: string, //
+  ) {
+    return await this.boardService.deleteImageFile({ url });
+  }
 }

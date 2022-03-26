@@ -158,6 +158,7 @@ type Mutation {
   updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
   deleteBoard(scheduleId: String!): Boolean!
   uploadBoardImagefile(file: Upload!): String!
+  deleteBoardImagefile(url: String!): String!
 }
 
 input CreateUserInput {

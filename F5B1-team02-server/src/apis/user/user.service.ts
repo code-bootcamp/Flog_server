@@ -97,4 +97,12 @@ export class UserService {
     console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
     return result ? true : false;
   }
+  // async update({ userId, updateUserInput }) {
+  //   const userInfo = await this.userRepository.findOne({ id: userId });
+  //   const newUrl = {
+  //     ...userInfo,
+  //     ...updateUserInput,
+  //   };
+  //   return await this.userRepository.save(newUrl);
+  // }
 }

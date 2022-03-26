@@ -1,10 +1,10 @@
 import { CACHE_MANAGER, Inject } from '@nestjs/common';
-import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Board } from '../board/entities/board.entity';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { ShareScheduleService } from './sharedList.service';
 import { Cache } from 'cache-manager';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 
 @Resolver()
 export class ShareScheduleResolver {

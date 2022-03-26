@@ -80,8 +80,9 @@ export class UserResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   async deleteProfileImagefile(
-    @Args('url') url: string, //
+    @Args('userId') userId: string, //
+    // @Args('url') url: string, //
   ) {
-    return await this.userService.deleteImageFile({ url });
+    return await this.userService.deleteImageFile({ userId });
   }
 }

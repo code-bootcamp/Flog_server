@@ -82,8 +82,10 @@ export class UserService {
     return imageUrl;
   }
 
-  async deleteImageFile({ url }) {
-    const spliturl = url.split(`${process.env.STORAGE_BUCKET}/`);
+  async deleteImageFile({ userId }) {
+    const userInfo = await this.userRepository.findOne({ id: userId });
+
+    const spliturl = userInfo.url.split(`${process.env.STORAGE_BUCKET}/`);
     const fileName = spliturl[spliturl.length - 1];
     const storage = new Storage({
       keyFilename: process.env.STORAGE_KEY_FILENAME,
@@ -94,7 +96,14 @@ export class UserService {
       .file(fileName)
       .delete();
 
+    console.log('================================================');
     console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
+    console.log('================================================');
+
+    const { url, ...user } = userInfo;
+    const deleteUrl = { ...user, url: null };
+    await this.userRepository.save(deleteUrl);
+
     return result ? true : false;
   }
 }

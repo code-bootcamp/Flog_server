@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 import { User } from '../user/entities/user.entity';
@@ -7,7 +8,12 @@ import { ScheduleResolver } from './schedule.resolver';
 import { ScheduleService } from './schedule.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Schedule, MainCategory, User])],
+  imports: [
+    TypeOrmModule.forFeature([Schedule, MainCategory, User]),
+    ElasticsearchModule.register({
+      node: 'http://elasticsearch:9200',
+    }),
+  ],
   providers: [
     ScheduleResolver, //
     ScheduleService,

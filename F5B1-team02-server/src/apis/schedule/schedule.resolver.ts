@@ -1,5 +1,7 @@
 import { UseGuards } from '@nestjs/common';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { query } from 'express';
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 import { CreateScheduleInput } from './dto/createSchedule.input';
@@ -10,6 +12,7 @@ import { ScheduleService } from './schedule.service';
 export class ScheduleResolver {
   constructor(
     private readonly scheduleService: ScheduleService, //
+    private readonly elasticSearchService: ElasticsearchService,
   ) {}
 
   @UseGuards(GqlAuthAccessGuard)
@@ -18,6 +21,14 @@ export class ScheduleResolver {
     @CurrentUser() currentUser: ICurrentUser, //
     @Args('page', { defaultValue: 1 }) page: number,
   ) {
+    // 배포할때
+    const result = await this.elasticSearchService.search({
+      index: 'flog1',
+      query: {
+        match_all: {},
+      },
+    });
+    console.log('fetchProducts', JSON.stringify(result));
     return await this.scheduleService.findMyQt({ currentUser, page });
   }
 
@@ -28,7 +39,15 @@ export class ScheduleResolver {
     @Args('createScheduleInput') createScheduleInput: CreateScheduleInput,
   ) {
     const { id, ...user } = currentUser;
-
+    //배포할때 한번 연결해주기
+    await this.elasticSearchService.create({
+      id: 'flog',
+      index: 'flog1',
+      document: {
+        id,
+        ...createScheduleInput,
+      },
+    });
     return await this.scheduleService.create({
       id,
       createScheduleInput,

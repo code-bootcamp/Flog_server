@@ -11,7 +11,7 @@ import {
   PointHistory,
   POINT_TRANSACTION_STATUS_ENUM,
 } from '../pointHistory/entities/pointHistory.entity';
-import { SharedList } from '../sharedList/entities/sharedList.entity';
+// import { SharedList } from '../sharedList/entities/sharedList.entity';
 
 @Injectable()
 export class PointTransactionService {
@@ -22,8 +22,8 @@ export class PointTransactionService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(PointHistory)
     private readonly pointHistoryRepository: Repository<PointHistory>,
-    @InjectRepository(SharedList)
-    private readonly sharedListRepository: Repository<SharedList>,
+    // @InjectRepository(SharedList)
+    // private readonly sharedListRepository: Repository<SharedList>,
 
     private readonly connection: Connection,
   ) {}

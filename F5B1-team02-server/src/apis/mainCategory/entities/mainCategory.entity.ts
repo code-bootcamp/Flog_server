@@ -9,7 +9,7 @@ export enum MAINCATEGORY_ENUM {
 registerEnumType(MAINCATEGORY_ENUM, {
   name: 'MAINCATEGORY_ENUM',
 });
-
+console.log('✨');
 @Entity()
 @ObjectType()
 export class MainCategory {

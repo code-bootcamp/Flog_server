@@ -45,10 +45,3 @@ services:
       - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar
 
-  # # kibana:
-  # #   image: kibana:7.17.0
-  # #   environment:
-  # #     ELASTICSERCH_UTL:http://elasticsearch:9200
-  # #     ELASTICSERCH_HOSTS:http://elasticsearch:9200
-  # #   ports:
-  # #     - 5601:5601

@@ -129,13 +129,13 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
-<<<<<<< HEAD
+
   scheduleSearch(search: String!, where: String!): [Schedule!]!
   scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
   fetchMainCategory: [MainCategory!]!
-=======
+
   fetchSearch(search: String!): [Schedule!]!
->>>>>>> 0f2479fab9251944a35d59031c2783d249a5ca69
+
 }
 
 type Mutation {

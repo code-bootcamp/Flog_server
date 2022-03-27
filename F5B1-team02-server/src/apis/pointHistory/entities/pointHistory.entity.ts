@@ -33,6 +33,7 @@ export class PointHistory {
   changed: number;
 
   @CreateDateColumn()
+  @Field(() => Date)
   createdAt: Date;
 
   @Column({ type: 'enum', enum: POINT_TRANSACTION_STATUS_ENUM })

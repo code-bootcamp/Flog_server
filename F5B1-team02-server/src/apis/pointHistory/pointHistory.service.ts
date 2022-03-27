@@ -11,9 +11,17 @@ export class PointHistoryService {
     private readonly pointHistoryRepository: Repository<PointHistory>,
   ) {}
   async find({ currentUser }) {
-    // console.log(currentUser.id);
-    return await this.pointHistoryRepository.find({
-      where: { user: currentUser.id },
-    });
+    const history = await this.pointHistoryRepository
+      .createQueryBuilder('pointHistory')
+      .innerJoinAndSelect('pointHistory.user', 'user')
+      .where('user.id = :userId', { userId: currentUser.id })
+      .orderBy('pointHistory.createdAt')
+      .getMany();
+
+    return history;
+    // return await this.pointHistoryRepository.find({
+    //   user: currentUser.id,
+    //   // createdAt: createAt,
+    // })
   }
 }

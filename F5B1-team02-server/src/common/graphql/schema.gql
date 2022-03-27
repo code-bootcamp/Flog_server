@@ -26,10 +26,16 @@ type PointTransaction {
 type PointHistory {
   id: String!
   changed: Int!
+  createdAt: DateTime!
   status: POINT_TRANSACTION_STATUS_ENUM!
   pointId: PointTransaction!
   mainCategory: MainCategory!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 enum POINT_TRANSACTION_STATUS_ENUM {
   CHARGE
@@ -69,18 +75,6 @@ enum HASHTAG {
   PET
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type Board {
-  id: String!
-  day: String!
-  content: String!
-  schedule: Schedule!
-}
-
 type Budget {
   id: String!
   amount: Int!
@@ -118,6 +112,13 @@ type DetailSchedule {
   schedule: Schedule!
 }
 
+type Board {
+  id: String!
+  day: String!
+  content: String!
+  schedule: Schedule!
+}
+
 type Query {
   fetchUser: User!
   fetchBudget(scheduleId: String!): [Budget!]!
@@ -128,7 +129,11 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
-  fetchSearch(search: String!): [Schedule!]!
+
+  scheduleSearch(search: String!, where: String!): [Schedule!]!
+  scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
+  fetchMainCategory: [MainCategory!]!
+
 }
 
 type Mutation {

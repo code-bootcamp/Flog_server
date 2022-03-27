@@ -4,7 +4,11 @@ import { Repository } from 'typeorm';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 import { User } from '../user/entities/user.entity';
 import { CreateScheduleInput } from './dto/createSchedule.input';
-import { NUMBER_PEOPLE_ENUM, Schedule } from './entities/schedule.entity';
+import {
+  HASHTAG,
+  NUMBER_PEOPLE_ENUM,
+  Schedule,
+} from './entities/schedule.entity';
 
 interface IFindOne {
   scheduleId: string;
@@ -12,6 +16,14 @@ interface IFindOne {
 interface ICreate {
   id: string;
   createScheduleInput: CreateScheduleInput;
+}
+interface IFindHashtagLocation {
+  where: string;
+  hashTag: HASHTAG;
+}
+
+interface IFindLocation {
+  where: string;
 }
 
 @Injectable()
@@ -41,6 +53,17 @@ export class ScheduleService {
   async findOne({ scheduleId }: IFindOne) {
     return await this.scheduleRepository.findOne({
       where: { id: scheduleId },
+    });
+  }
+
+  async findHashtagLocation({ hashTag, where }: IFindHashtagLocation) {
+    return await this.scheduleRepository.find({
+      where: { location: where, hashtag: hashTag },
+    });
+  }
+  async findLocation({ where }: IFindLocation) {
+    return await this.scheduleRepository.findOne({
+      where: { location: where },
     });
   }
 

@@ -41,7 +41,6 @@ services:
   logstash:
     image: logstash:7.17.0
     volumes:
-      - ./elk/logstash/log.json:/usr/share/elk/logstash/log.json
       - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar
 

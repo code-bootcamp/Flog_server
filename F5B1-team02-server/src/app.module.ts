@@ -54,6 +54,7 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,
       logging: true,
+      timezone: 'Asia/Seoul',
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.register<RedisClientOptions>({

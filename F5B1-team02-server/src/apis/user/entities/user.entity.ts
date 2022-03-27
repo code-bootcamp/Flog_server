@@ -29,9 +29,9 @@ export class User {
   @Field(() => Int)
   point: number;
 
-  // 프로필 이미지 다시 확인??
-  @Column({ default: false })
-  @Field(() => String)
+  // 프로필 이미지
+  @Column({ default: null })
+  @Field(() => String, { nullable: true })
   url: string;
 
   @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })

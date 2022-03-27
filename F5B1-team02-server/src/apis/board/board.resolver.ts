@@ -5,6 +5,7 @@ import { BoardService } from './board.service';
 import { CreateBoardInput } from './dto/createBoard.input';
 import { UpdateBoardInput } from './dto/updateBoard.input';
 import { Board } from './entities/board.entity';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver()
 export class BoardResolver {
@@ -43,5 +44,21 @@ export class BoardResolver {
   @Mutation(() => Boolean)
   async deleteBoard(@Args('scheduleId') scheduleId: string) {
     return await this.boardService.delete({ scheduleId });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  async uploadBoardImagefile(
+    @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
+  ) {
+    return await this.boardService.upload({ file });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  async deleteBoardImagefile(
+    @Args('url') url: string, //
+  ) {
+    return await this.boardService.deleteImageFile({ url });
   }
 }

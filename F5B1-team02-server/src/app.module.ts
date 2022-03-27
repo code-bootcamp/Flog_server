@@ -49,7 +49,7 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       host: 'my_database',
       port: 3306,
       username: 'root',
-      password: '1234',
+      password: 'root',
       database: 'flog',
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,

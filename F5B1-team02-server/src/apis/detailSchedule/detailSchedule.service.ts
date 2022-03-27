@@ -21,10 +21,9 @@ export class DetailScheduleService {
 
   async findMyQts({ currentUser, scheduleId, userId }) {
     const myQts = await this.detailScheduleRepository
-      .createQueryBuilder()
-      .select('detail_schedule')
-      .from(DetailSchedule, 'detail_schedule')
-      .innerJoin('detail_schedule', 'schedule.id')
+
+      .createQueryBuilder('detail_schedule')
+      .innerJoinAndSelect('detail_schedule.schedule', 'schedule')
       .where('detail_schedule.scheduleId = :scheduleId', {
         scheduleId: scheduleId,
       })

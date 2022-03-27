@@ -23,12 +23,10 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
 
   //검증끝나고 수행되는 부분
   async validate(req, payload) {
-    if (
-      await this.cacheManager.get(
-        `accessToken:${req.headers.authorization.split(' ')[1]}`,
-      )
-    )
+    let ac_Token = req.headers.authorization.split(' ')[1];
+    if (await this.cacheManager.get(`accessToken:${ac_Token}`)) {
       throw new UnauthorizedException('로그아웃된 사용자입니다');
+    }
 
     return {
       id: payload.sub,

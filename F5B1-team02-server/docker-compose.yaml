@@ -1,11 +1,12 @@
 version: '3.3'
 services:
   flog_backend:
+    image: asia.gcr.io/codecamp-backend-01th/my_backend:1.0
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - asia.gcr.io/flog-project/flog_backend:1.0
+      - ./src:/flog_backend/src
     env_file:
       - ./.env
     ports:
@@ -31,15 +32,15 @@ services:
     ports:
       - 6379:6379
 
-  elasticsearch:
-    image: elasticsearch:7.17.0
-    environment:
-      discovery.type: single-node
-    ports:
-      - 9200:9200
+  # elasticsearch:
+  #   image: elasticsearch:7.17.0
+  #   environment:
+  #     discovery.type: single-node
+  #   ports:
+  #     - 9200:9200
 
-  logstash:
-    image: logstash:7.17.0
-    volumes:
-      - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar
+  # logstash:
+  #   image: logstash:7.17.0
+  #   volumes:
+  #     - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #     - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar

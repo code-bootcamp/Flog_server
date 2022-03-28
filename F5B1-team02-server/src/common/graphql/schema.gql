@@ -130,6 +130,7 @@ type Query {
   fetchBudget(scheduleId: String!): [Budget!]!
   fetchPointHistory: [PointHistory!]!
   fetchSchedules(page: Float = 1): [Schedule!]!
+  fetchSchedule(scheduleId: String!): Schedule!
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
   fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
@@ -168,7 +169,7 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
   updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
   deleteBoard(scheduleId: String!): Boolean!
-  uploadBoardImagefile(file: Upload!): String!
+  uploadBoardImagefiles(files: [Upload!]!): [String!]!
   deleteBoardImagefile(url: String!): String!
 }
 

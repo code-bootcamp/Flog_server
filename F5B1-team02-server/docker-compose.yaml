@@ -1,11 +1,13 @@
 version: '3.3'
 services:
   flog_backend:
+    platform: linux/x86_64
+    image: asia.gcr.io/flog-project/flog_backend:1.0
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - asia.gcr.io/flog-project/flog_backend:1.0
+      - ./src:/flog_backend/src
     env_file:
       - ./.env
     ports:

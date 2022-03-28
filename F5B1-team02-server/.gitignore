@@ -3,7 +3,6 @@
 /node_modules
 .env
 flog-project.json
-flogTEST.json
 
 # Logs
 logs

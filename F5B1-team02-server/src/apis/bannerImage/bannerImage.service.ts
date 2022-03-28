@@ -20,7 +20,7 @@ export class BannerImageService {
       projectId: process.env.STORAGE_PROJECT_ID,
     }).bucket(process.env.STORAGE_BUCKET);
 
-    const fname = `${getToday()}/${uuidv4()}/origin/${file.filename}`;
+    const fname = `banner/${getToday()}/${uuidv4()}/${file.filename}`;
     const imageUrl = await new Promise((resolve, reject) => {
       file
         .createReadStream()

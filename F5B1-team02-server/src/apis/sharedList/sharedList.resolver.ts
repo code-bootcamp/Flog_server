@@ -5,7 +5,6 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 
-
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Board } from '../board/entities/board.entity';
 import { HASHTAG, Schedule } from '../schedule/entities/schedule.entity';
@@ -14,7 +13,6 @@ import { Cache } from 'cache-manager';
 
 import { ScheduleService } from '../schedule/schedule.service';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-
 
 @Resolver()
 export class ShareScheduleResolver {
@@ -50,8 +48,8 @@ export class ShareScheduleResolver {
   ) {
     // const list = await this.cacheManager.get(`${search}`);
     // const map = await this.cacheManager.get(`${where}`);
-    // if (list && map) {
-    //   return list && map;
+    // if (list) {
+    //   return list
     // } else {
     await this.scheduleService.findLocation({ where });
 

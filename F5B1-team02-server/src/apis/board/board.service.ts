@@ -58,34 +58,25 @@ export class BoardService {
     return myQts;
   }
 
-  async uploads({ files }: IFile) {
+  async upload({ file }) {
     const storage = new Storage({
       keyFilename: process.env.STORAGE_KEY_FILENAME,
       projectId: process.env.STORAGE_PROJECT_ID,
     }).bucket(process.env.STORAGE_BUCKET);
 
-    const waitedFiles = await Promise.all(files);
-
-    const imageUrls = await Promise.all(
-      waitedFiles.map((file) => {
-        const fname = `board/${getToday()}/${uuidv4()}/${file.filename}`;
-        return new Promise((resolve, reject) => {
-          file
-            .createReadStream()
-            .pipe(storage.file(fname).createWriteStream())
-            .on('finish', () =>
-              resolve(`${process.env.STORAGE_BUCKET}/${fname}`),
-            )
-            .on('error', (error) => reject('error: ' + error));
-        });
-      }),
-    );
-
-    console.log('=============imageUrls==========================');
-    console.log(imageUrls);
+    const fname = `board/${getToday()}/${uuidv4()}/${file.filename}`;
+    const imageUrl = await new Promise((resolve, reject) => {
+      file
+        .createReadStream()
+        .pipe(storage.file(fname).createWriteStream())
+        .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
+        .on('error', (error) => reject('error: ' + error));
+    });
+    console.log('=============imageUrl==========================');
+    console.log(imageUrl);
     console.log('===============================================');
 
-    return imageUrls;
+    return imageUrl;
   }
 
   async deleteImageFile({ url }) {

@@ -47,11 +47,11 @@ export class BoardResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
-  @Mutation(() => [String])
-  async uploadBoardImagefiles(
-    @Args({ name: 'files', type: () => [GraphQLUpload] }) files: FileUpload,
+  @Mutation(() => String)
+  async uploadBoardImagefile(
+    @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
   ) {
-    return await this.boardService.uploads({ files });
+    return await this.boardService.upload({ file });
   }
 
   @UseGuards(GqlAuthAccessGuard)

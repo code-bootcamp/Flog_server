@@ -2,7 +2,7 @@
 /dist
 /node_modules
 .env
-flogTEST.json
+flog-project.json
 
 # Logs
 logs

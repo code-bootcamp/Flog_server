@@ -1,9 +1,9 @@
 FROM node:16
 
-WORKDIR /my_backend/
-COPY ./package.json /my_backend/
-COPY ./yarn.lock /my_backend/
+WORKDIR /flog_backend/
+COPY ./package.json /flog_backend/
+COPY ./yarn.lock /flog_backend/
 RUN yarn install
 
-COPY . /my_backend/
+COPY . /flog_backend/
 CMD yarn start:dev

@@ -1,7 +1,8 @@
 version: '3.3'
 services:
   flog_backend:
-    image: asia.gcr.io/codecamp-backend-01th/my_backend:1.0
+    platform: linux/x86_64
+    image: asia.gcr.io/flog-project/flog_backend:1.0
     build:
       context: .
       dockerfile: Dockerfile

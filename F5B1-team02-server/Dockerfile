@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:14
 
 WORKDIR /flog_backend/
 COPY ./package.json /flog_backend/

@@ -135,9 +135,19 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
+<<<<<<< HEAD
   scheduleSearch(search: String!, where: String!): [Schedule!]!
   scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
   fetchMainCategory: [MainCategory!]!
+=======
+
+  scheduleSearch(search: String!, where: String!): [Schedule!]!
+  scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
+  fetchMainCategory: [MainCategory!]!
+
+  fetchSearch(search: String!): [Schedule!]!
+
+>>>>>>> a01cb1dfb05dc2605580107a9dc78c59bb922f1a
 }
 
 type Mutation {

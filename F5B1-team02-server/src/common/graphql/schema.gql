@@ -4,7 +4,13 @@
 
 type MainCategory {
   id: String!
-  name: String!
+  name: MAINCATEGORY_ENUM!
+}
+
+enum MAINCATEGORY_ENUM {
+  MINE
+  OUR
+  MYPAGE
 }
 
 type User {
@@ -129,13 +135,9 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
-
   scheduleSearch(search: String!, where: String!): [Schedule!]!
   scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
   fetchMainCategory: [MainCategory!]!
-
-  fetchSearch(search: String!): [Schedule!]!
-
 }
 
 type Mutation {

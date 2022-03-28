@@ -9,6 +9,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 export enum NUMBER_PEOPLE_ENUM {
@@ -91,4 +92,7 @@ export class Schedule {
   @CreateDateColumn()
   @Field(() => Date)
   createAt: Date;
+
+  @UpdateDateColumn()
+  updatedat: Date;
 }

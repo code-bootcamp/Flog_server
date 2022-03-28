@@ -53,6 +53,7 @@ export class ScheduleService {
   async findOne({ scheduleId }: IFindOne) {
     return await this.scheduleRepository.findOne({
       where: { id: scheduleId },
+      relations: ['user'],
     });
   }
 

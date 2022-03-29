@@ -43,10 +43,14 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       driver: ApolloDriver,
       autoSchemaFile: 'src/common/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }), //
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'flog_database',
+      host: '10.63.130.161',
       port: 3306,
       username: 'root',
       password: 'root',
@@ -54,7 +58,6 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,
       logging: true,
-      timezone: 'Asia/Seoul',
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.register<RedisClientOptions>({

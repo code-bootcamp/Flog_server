@@ -19,7 +19,7 @@ export class DetailScheduleService {
     private readonly detailScheduleRepository: Repository<DetailSchedule>,
   ) {}
 
-  async findMyQts({ currentUser, scheduleId, userId }) {
+  async findMyQts({ scheduleId }) {
     const myQts = await this.detailScheduleRepository
 
       .createQueryBuilder('detail_schedule')
@@ -33,17 +33,10 @@ export class DetailScheduleService {
       })
       .getMany();
 
-    if (currentUser.id !== userId) {
-      throw new HttpException(
-        '로그인id 와 scheduleId 의 유저 아이디가 같지 않습니다',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    } else {
-      return myQts;
-    }
+    return myQts;
   }
 
-  async findMyQtDay({ currentUser, scheduleId, userId, day }) {
+  async findMyQtDay({ scheduleId, day }) {
     const myQts = await this.detailScheduleRepository
       .createQueryBuilder()
       .select('detail_schedule')
@@ -60,14 +53,7 @@ export class DetailScheduleService {
       })
       .getMany();
 
-    if (currentUser.id !== userId) {
-      throw new HttpException(
-        '로그인id 와 scheduleId 의 유저 아이디가 같지 않습니다',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    } else {
-      return myQts;
-    }
+    return myQts;
   }
 
   async findOne({ id }) {

@@ -15,30 +15,20 @@ export class DetailScheduleResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [DetailSchedule])
-  async fetchDetailSchedules(
-    @CurrentUser() currentUser: ICurrentUser, //
-    @Args('scheduleId') scheduleId: string,
-    @Args('userId') userId: string,
-  ) {
+  async fetchDetailSchedules(@Args('scheduleId') scheduleId: string) {
     return await this.detailScheduleService.findMyQts({
-      currentUser,
       scheduleId,
-      userId,
     });
   }
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [DetailSchedule])
   async fetchDetailSchedule(
-    @CurrentUser() currentUser: ICurrentUser, //
     @Args('scheduleId') scheduleId: string,
-    @Args('userId') userId: string,
     @Args('day') day: string,
   ) {
     return await this.detailScheduleService.findMyQtDay({
-      currentUser,
       scheduleId,
-      userId,
       day,
     });
   }
@@ -46,7 +36,6 @@ export class DetailScheduleResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => DetailSchedule)
   async createDetailSchedule(
-    @CurrentUser() currentUser: ICurrentUser, //
     @Args('createDetailScheduleInput')
     createDetailScheduleInput: CreateDetailScheduleInput,
     @Args('scheduleId') scheduleId: string,
@@ -59,7 +48,6 @@ export class DetailScheduleResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => DetailSchedule)
   async updateDetailSchedule(
-    @CurrentUser() currentUser: ICurrentUser, //
     @Args('updateDetailScheduleInput')
     updateDetailScheduleInput: UpdateDetailScheduleInput,
     @Args('detailScheduleId') detailScheduleId: string,

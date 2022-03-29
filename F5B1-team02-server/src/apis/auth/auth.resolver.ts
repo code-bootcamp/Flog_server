@@ -5,13 +5,23 @@ import {
   UnprocessableEntityException,
   UseGuards,
 } from '@nestjs/common';
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Field,
+  Mutation,
+  ObjectType,
+  Resolver,
+} from '@nestjs/graphql';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 import { AuthService } from './auth.service';
-import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
+import {
+  GqlAuthAccessGuard,
+  GqlAuthRefreshGuard,
+} from 'src/common/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 
 @Resolver()
@@ -45,7 +55,7 @@ export class AuthResolver {
   }
 
   // restoreAccessToken
-  @UseGuards(GqlAuthAccessGuard)
+  @UseGuards(GqlAuthRefreshGuard)
   @Mutation(() => String)
   restoreAccessToken(
     @CurrentUser() currentUser: ICurrentUser, //

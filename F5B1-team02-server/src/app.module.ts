@@ -50,7 +50,8 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
     }), //
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '10.63.130.161',
+      host: 'flog_database',
+      // host: '10.63.130.161',
       port: 3306,
       username: 'root',
       password: 'root',
@@ -58,6 +59,7 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,
       logging: true,
+      timezone: 'Asia/Seoul',
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.register<RedisClientOptions>({

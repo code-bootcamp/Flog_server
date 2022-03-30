@@ -9,7 +9,6 @@ import {
   NUMBER_PEOPLE_ENUM,
   Schedule,
 } from './entities/schedule.entity';
-import { Tripdate } from './entities/tripdates.entity';
 
 interface IFindOne {
   scheduleId: string;
@@ -65,9 +64,12 @@ export class ScheduleService {
   }
 
   async findHashtagLocation({ hashTag, where }: IFindHashtagLocation) {
-    return await this.scheduleRepository.find({
-      where: { location: where, hashtag: hashTag },
-    });
+    const find = await this.scheduleRepository
+      .createQueryBuilder()
+      .where({ isShare: '1' })
+      .andWhere({ location: where, hashtag: hashTag })
+      .getMany();
+    return find;
   }
   async findLocation({ where }: IFindLocation) {
     return await this.scheduleRepository.findOne({

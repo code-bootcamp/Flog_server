@@ -11,10 +11,19 @@ export class MoneyBookService {
   ) {}
 
   async create(amount, budgetId, currentUser, { ...createMoneyBookInput }) {
-    // const budget = await this.moneyBookRepository.findOne({ budget: budgetId });
+    const { tripdates, ...moneybook } = createMoneyBookInput;
+    let result2 = '';
+    let result3 = tripdates.split(',');
+    console.log(result3);
+
+    for (let i = 0; i < result3.length; i++) {
+      const tripdate = result3[i] + ';';
+      result2 += tripdate;
+    }
     return await this.moneyBookRepository.save({
       amount,
       budget: budgetId,
+      tripdates: result2,
       ...createMoneyBookInput,
       user: currentUser,
     });

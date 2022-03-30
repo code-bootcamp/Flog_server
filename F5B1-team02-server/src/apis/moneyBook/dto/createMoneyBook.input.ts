@@ -1,5 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { SPENDING_CATEGORY_STATUS_ENUM } from '../entities/moneyBook.entity';
+// import { TripDays } from '../entities/tripDates.entity';
 
 @InputType()
 export class CreateMoneyBookInput {
@@ -17,4 +18,7 @@ export class CreateMoneyBookInput {
 
   @Field(() => String)
   memo?: string;
+
+  @Field(() => String)
+  tripdates: string;
 }

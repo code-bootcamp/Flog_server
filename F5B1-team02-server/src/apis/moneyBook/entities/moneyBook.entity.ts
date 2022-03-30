@@ -1,6 +1,14 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Budget } from 'src/apis/budget/entities/budget.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum SPENDING_CATEGORY_STATUS_ENUM {
   FOOD = 'FOOD',
@@ -47,4 +55,8 @@ export class MoneyBook {
   @Column({ default: 0 })
   @Field(() => Int)
   amount: number;
+
+  @Column()
+  @Field(() => String)
+  tripdates: string;
 }

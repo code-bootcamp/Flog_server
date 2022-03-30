@@ -5,9 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -95,4 +93,8 @@ export class Schedule {
 
   @UpdateDateColumn()
   updatedat: Date;
+
+  @Column()
+  @Field(() => String)
+  tripdates: string;
 }

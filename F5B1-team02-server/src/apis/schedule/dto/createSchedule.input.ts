@@ -25,4 +25,7 @@ export class CreateScheduleInput {
 
   @Field(() => String)
   mainCategoryId?: string;
+
+  @Field(() => String)
+  tripdates: string;
 }

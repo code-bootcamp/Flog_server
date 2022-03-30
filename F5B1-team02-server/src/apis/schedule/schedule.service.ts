@@ -9,6 +9,7 @@ import {
   NUMBER_PEOPLE_ENUM,
   Schedule,
 } from './entities/schedule.entity';
+import { Tripdate } from './entities/tripdates.entity';
 
 interface IFindOne {
   scheduleId: string;
@@ -57,6 +58,12 @@ export class ScheduleService {
     });
   }
 
+  async findOneTdate({ scheduleId }) {
+    return await this.scheduleRepository.findOne({
+      where: { id: scheduleId },
+    });
+  }
+
   async findHashtagLocation({ hashTag, where }: IFindHashtagLocation) {
     return await this.scheduleRepository.find({
       where: { location: where, hashtag: hashTag },
@@ -69,17 +76,27 @@ export class ScheduleService {
   }
 
   async create({ id, createScheduleInput }: ICreate) {
-    const { mainCategoryId, ...schedule } = createScheduleInput;
+    const { mainCategoryId, tripdates, ...schedule } = createScheduleInput;
     const result = await this.mainCategoryRepository.findOne({
       id: mainCategoryId,
     });
     const userId = await this.userRepository.findOne({
       id,
     });
+    let result2 = '';
+    let result3 = tripdates.split(',');
+    console.log(result3);
+
+    for (let i = 0; i < result3.length; i++) {
+      const tripdate = result3[i] + ';';
+      result2 += tripdate;
+    }
+
     return await this.scheduleRepository.save({
       ...schedule,
       user: userId,
       mainCategory: result,
+      tripdates: result2,
     });
   }
 

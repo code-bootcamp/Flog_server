@@ -29,11 +29,14 @@ export class UserService {
   }
 
   async create(createUser: CreateUserInput) {
-    const { email, mainCategoryId, ...user } = createUser;
+    const { email, mainCategoryName, ...user } = createUser;
     const isUserEmail = await this.userRepository.findOne({ email });
     const result = await this.mainCategoryRepository.findOne({
-      id: mainCategoryId,
+      name: mainCategoryName,
     });
+    console.log('=======result==============================');
+    console.log(result);
+    console.log('=====================================');
 
     if (isUserEmail) {
       throw new HttpException(

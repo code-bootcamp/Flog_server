@@ -22,7 +22,7 @@ export class Board {
   @Field(() => String)
   day: string;
 
-  @Column()
+  @Column({ type: 'longtext' })
   @Field(() => String)
   content: string;
 

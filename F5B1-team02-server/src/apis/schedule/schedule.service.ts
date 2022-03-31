@@ -57,12 +57,6 @@ export class ScheduleService {
     });
   }
 
-  async findOneTdate({ scheduleId }) {
-    return await this.scheduleRepository.findOne({
-      where: { id: scheduleId },
-    });
-  }
-
   async findHashtagLocation({ hashTag, where }: IFindHashtagLocation) {
     const find = await this.scheduleRepository
       .createQueryBuilder()

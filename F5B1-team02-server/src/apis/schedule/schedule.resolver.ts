@@ -39,12 +39,6 @@ export class ScheduleResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
-  @Query(() => Schedule)
-  async fetchTripdates(@Args('scheduleId') scheduleId: string) {
-    return await this.scheduleService.findOne({ scheduleId });
-  }
-
-  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Schedule)
   async createSchedule(
     @CurrentUser() currentUser: ICurrentUser, //

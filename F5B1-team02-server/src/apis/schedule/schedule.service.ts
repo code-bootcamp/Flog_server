@@ -78,9 +78,9 @@ export class ScheduleService {
   }
 
   async create({ id, createScheduleInput }: ICreate) {
-    const { mainCategoryId, tripdates, ...schedule } = createScheduleInput;
+    const { mainCategoryName, tripdates, ...schedule } = createScheduleInput;
     const result = await this.mainCategoryRepository.findOne({
-      id: mainCategoryId,
+      name: mainCategoryName,
     });
     const userId = await this.userRepository.findOne({
       id,

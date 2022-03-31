@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { MAINCATEGORY_ENUM } from 'src/apis/mainCategory/entities/mainCategory.entity';
 
 @InputType()
 export class CreateUserInput {
@@ -11,6 +12,6 @@ export class CreateUserInput {
   @Field(() => String)
   password: string;
 
-  @Field(() => String)
-  mainCategoryId?: string;
+  @Field(() => MAINCATEGORY_ENUM)
+  mainCategoryName?: MAINCATEGORY_ENUM;
 }

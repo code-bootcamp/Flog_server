@@ -1,7 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { query } from 'express';
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/common/auth/gql-user.param';
 import { CreateScheduleInput } from './dto/createSchedule.input';

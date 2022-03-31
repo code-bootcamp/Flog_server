@@ -4,11 +4,7 @@ import { Repository } from 'typeorm';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 import { User } from '../user/entities/user.entity';
 import { CreateScheduleInput } from './dto/createSchedule.input';
-import {
-  HASHTAG,
-  NUMBER_PEOPLE_ENUM,
-  Schedule,
-} from './entities/schedule.entity';
+import { HASHTAG, Schedule } from './entities/schedule.entity';
 
 interface IFindOne {
   scheduleId: string;

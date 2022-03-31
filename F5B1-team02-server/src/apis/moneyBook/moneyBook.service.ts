@@ -20,6 +20,9 @@ export class MoneyBookService {
       const tripdate = result3[i] + ';';
       result2 += tripdate;
     }
+
+    result2 = result2.slice(0, result2.length - 1);
+
     return await this.moneyBookRepository.save({
       amount,
       budget: budgetId,

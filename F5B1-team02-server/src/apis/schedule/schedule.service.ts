@@ -94,6 +94,8 @@ export class ScheduleService {
       result2 += tripdate;
     }
 
+    result2 = result2.slice(0, result2.length - 1);
+
     return await this.scheduleRepository.save({
       ...schedule,
       user: userId,

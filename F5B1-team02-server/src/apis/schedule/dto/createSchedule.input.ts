@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { MAINCATEGORY_ENUM } from 'src/apis/mainCategory/entities/mainCategory.entity';
 import { HASHTAG, NUMBER_PEOPLE_ENUM } from '../entities/schedule.entity';
 
 @InputType()
@@ -23,8 +24,8 @@ export class CreateScheduleInput {
   @Field(() => HASHTAG)
   hashtag: HASHTAG;
 
-  @Field(() => String)
-  mainCategoryId?: string;
+  @Field(() => MAINCATEGORY_ENUM)
+  mainCategoryName?: MAINCATEGORY_ENUM;
 
   @Field(() => String)
   tripdates: string;

@@ -47,7 +47,7 @@ export class DetailScheduleService {
         day: day,
       })
       .orderBy({
-        'detail_schedule.startTime': 'DESC',
+        'detail_schedule.startTime': 'ASC',
       })
       .getMany();
 

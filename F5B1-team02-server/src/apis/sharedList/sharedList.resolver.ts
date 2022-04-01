@@ -46,39 +46,37 @@ export class ShareScheduleResolver {
     @Args('search') search: string,
     @Args('where') where: string,
   ) {
-    // const list = await this.cacheManager.get(`${search}`);
-    // const map = await this.cacheManager.get(`${where}`);
-    // if (list) {
-    //   return list
-    // } else {
-    await this.scheduleService.findLocation({ where });
-
-    const result = await this.elasticsearchService.search({
-      index: 'flog',
-      query: {
-        bool: {
-          must: [
-            { match: { title: search } }, //
-            { match: { location: where } }, //
-          ],
+    const list = await this.cacheManager.get(`${search && where}`);
+    if (list) {
+      console.log('1111', list);
+      return list;
+    } else {
+      const result = await this.elasticsearchService.search({
+        index: '1flog',
+        query: {
+          bool: {
+            must: [
+              { match: { title: search } }, //
+              { match: { location: where } }, //
+            ],
+          },
         },
-      },
-    });
-    // console.log(result.hits.hits);
-    const resultmap = result.hits.hits.map((el: any) => ({
-      id: el._source.id,
-      title: el._source.title,
-      location: el._source.location,
-    }));
-    console.log('resultmap', resultmap);
-    if (resultmap.length === 0)
-      throw new UnprocessableEntityException('해당 내용이 존재하지 않습니다.');
-    // await this.cacheManager.set(`${search}`, resultmap, { ttl: 0 });
-    // await this.cacheManager.set(`${where}`, resultmap, { ttl: 0 });
-    // console.log(map);
-    // if (map && resultmap) return resultmap;
-    return resultmap;
-    // }
+      });
+      // console.log(result.hits.hits);
+      const resultmap = result.hits.hits.map((el: any) => ({
+        id: el._source.id,
+        title: el._source.title,
+        location: el._source.location,
+      }));
+      console.log('resultmap', resultmap);
+      if (resultmap.length === 0)
+        throw new UnprocessableEntityException(
+          '해당 내용이 존재하지 않습니다.',
+        );
+      await this.cacheManager.set(`${search && where}`, resultmap, { ttl: 0 });
+
+      return resultmap;
+    }
   }
   //지도 + 해시태그
   @Query(() => [Schedule])

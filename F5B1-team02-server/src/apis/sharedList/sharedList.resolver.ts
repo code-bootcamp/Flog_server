@@ -34,7 +34,7 @@ export class ShareScheduleResolver {
 
   // 족보 조회
   @Query(() => [Board])
-  async fetchBoard(
+  async fetchShareBoard(
     @Args('scheduleId') scheduleId: string, //
   ) {
     return await this.shareScheduleService.findMyQtBoard({ scheduleId });

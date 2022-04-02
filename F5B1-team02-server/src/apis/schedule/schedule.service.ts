@@ -95,16 +95,14 @@ export class ScheduleService {
   }
 
   async updateShare({ scheduleId }) {
-    const result = await this.scheduleRepository.findOne({ id: scheduleId });
-    const shareUpdate = { ...result, isShare: '1' };
+    const schedule = await this.scheduleRepository.findOne({ id: scheduleId });
 
-    return await this.scheduleRepository.save(shareUpdate);
-  }
+    if (schedule.isShare === '0') {
+      schedule.isShare = '1';
+    } else {
+      schedule.isShare = '0';
+    }
 
-  async updateUnshare({ scheduleId }) {
-    const result = await this.scheduleRepository.findOne({ id: scheduleId });
-    const unshareUpdate = { ...result, isShare: '0' };
-
-    return await this.scheduleRepository.save(unshareUpdate);
+    return await this.scheduleRepository.save(schedule);
   }
 }

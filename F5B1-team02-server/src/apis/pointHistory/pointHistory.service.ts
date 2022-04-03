@@ -14,10 +14,10 @@ export class PointHistoryService {
     const history = await this.pointHistoryRepository
       .createQueryBuilder('pointHistory')
       .innerJoinAndSelect('pointHistory.user', 'user')
+      .leftJoinAndSelect('pointHistory.pointId', 'pointId')
       .where('user.id = :userId', { userId: currentUser.id })
       .orderBy('pointHistory.createdAt')
       .getMany();
-
     return history;
     // return await this.pointHistoryRepository.find({
     //   user: currentUser.id,

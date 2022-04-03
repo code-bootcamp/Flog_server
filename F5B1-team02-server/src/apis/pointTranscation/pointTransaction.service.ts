@@ -57,26 +57,34 @@ export class PointTransactionService {
     await queryRunner.startTransaction('SERIALIZABLE');
     try {
       //1. pointTransaction테이블에 거래기록 생성
-      const pointTransaction = this.pointTransactionRepository.create({
+      const pointTransaction = await this.pointTransactionRepository.create({
         impUid: impUid,
         amount: amount,
         user: currentUser,
       });
+      await queryRunner.manager.save(pointTransaction);
+
+      // const pointId = await this.pointTransactionRepository.findOne({
+      //   id: pointTransaction.id,
+      // });
+      // console.log('11111111', pointId);
       // 1-2. historyTransaction테이블에 변경 금액, 상태 생성
-      const historyTransaction = this.pointHistoryRepository.create({
+      const user = await queryRunner.manager.findOne(User, {
+        id: currentUser.id,
+      });
+      const historyTransaction = await this.pointHistoryRepository.create({
+        // pointId: pointId,
+        current: user.point + amount,
         status,
         changed: amount,
         user: currentUser,
       });
       console.log(`changed:${historyTransaction.changed}`);
-      await queryRunner.manager.save(pointTransaction);
       console.log(`pointTransaction:${pointTransaction}`);
       await queryRunner.manager.save(historyTransaction);
       console.log(`historyTransaction:${historyTransaction}`);
       //2. 유저 정보 조회
-      const user = await queryRunner.manager.findOne(User, {
-        id: currentUser.id,
-      });
+
       console.log(user);
       //3. 유저의 돈 업데이트
       const newUser = await this.userRepository.create({
@@ -144,7 +152,7 @@ export class PointTransactionService {
   async checkPoint({ currentUser }) {
     const pointTransacion = await this.pointTransactionRepository.findOne(
       { user: { id: currentUser.id } },
-      { lock: { mode: 'pessimistic_write' } },
+      // { lock: { mode: 'pessimistic_write' } },
     );
     const user = await this.userRepository.findOne({ id: currentUser.id });
     if (user.point < pointTransacion.amount)
@@ -170,9 +178,13 @@ export class PointTransactionService {
     await queryRunner.startTransaction('SERIALIZABLE');
     try {
       //currentUser 포인트 차감/ 히스토리 테이블 저장 + 상태표시
+      const payUserfind = await queryRunner.manager.findOne(User, {
+        id: currentUser.id,
+      });
       const usePointTransacion = this.pointHistoryRepository.create({
         user: currentUser.id,
         changed: -point,
+        current: payUserfind.point - point,
         status: POINT_TRANSACTION_STATUS_ENUM.PAYMENT,
       });
       await queryRunner.manager.save(usePointTransacion);
@@ -184,9 +196,6 @@ export class PointTransactionService {
       // await queryRunner.manager.save(payPointHistory);
 
       console.log('111', usePointTransacion);
-      const payUserfind = await queryRunner.manager.findOne(User, {
-        id: currentUser.id,
-      });
 
       const payUser = this.userRepository.create({
         id: currentUser.id,
@@ -197,17 +206,19 @@ export class PointTransactionService {
       // console.log('333', payPointHistory);
       // console.log('+++++++', userId);
 
+      const earnUserfind = await queryRunner.manager.findOne(User, {
+        id: userId,
+      });
       //받는 유저 포인트 증가 / 히스토리 테이블 저장 + 상태표시
       const earnPointTransaction = this.pointHistoryRepository.create({
         user: userId,
         changed: point,
+        current: earnUserfind.point + point,
         status: POINT_TRANSACTION_STATUS_ENUM.EARN,
       });
       await queryRunner.manager.save(earnPointTransaction);
       // console.log(earnPointTransaction);
-      const earnUserfind = await queryRunner.manager.findOne(User, {
-        id: userId,
-      });
+
       console.log('222', earnUserfind);
       const earnUser = this.userRepository.create({
         id: userId,

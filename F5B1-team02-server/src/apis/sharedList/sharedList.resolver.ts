@@ -10,7 +10,6 @@ import { Board } from '../board/entities/board.entity';
 import { HASHTAG, Schedule } from '../schedule/entities/schedule.entity';
 import { ShareScheduleService } from './sharedList.service';
 import { Cache } from 'cache-manager';
-
 import { ScheduleService } from '../schedule/schedule.service';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 
@@ -24,7 +23,6 @@ export class ShareScheduleResolver {
     private readonly cacheManager: Cache,
   ) {}
 
-  //족보 리스트 조회
   @Query(() => [Schedule])
   async fetchShareSchedules(
     @Args('page', { defaultValue: 1 }) page: number, //
@@ -32,7 +30,6 @@ export class ShareScheduleResolver {
     return await this.shareScheduleService.findMyQtList({ page });
   }
 
-  // 족보 조회
   @Query(() => [Board])
   async fetchShareBoard(
     @Args('scheduleId') scheduleId: string, //
@@ -40,45 +37,39 @@ export class ShareScheduleResolver {
     return await this.shareScheduleService.findMyQtBoard({ scheduleId });
   }
 
-  //지도 + 검색
   @Query(() => [Schedule])
   async scheduleSearch(
     @Args('search') search: string,
     @Args('where') where: string,
   ) {
-    const list = await this.cacheManager.get(`${search && where}`);
-    if (list) {
-      console.log('1111', list);
-      return list;
-    } else {
-      const result = await this.elasticsearchService.search({
-        index: '1flog',
-        query: {
-          bool: {
-            must: [
-              { match: { title: search } }, //
-              { match: { location: where } }, //
-            ],
-          },
+    const result = await this.elasticsearchService.search({
+      index: '1flog',
+      from: 0,
+      size: 100,
+      query: {
+        bool: {
+          must: [
+            { prefix: { title: search } }, //
+            { match: { location: where } }, //
+          ],
         },
-      });
-      // console.log(result.hits.hits);
-      const resultmap = result.hits.hits.map((el: any) => ({
-        id: el._source.id,
-        title: el._source.title,
-        location: el._source.location,
-      }));
-      console.log('resultmap', resultmap);
-      if (resultmap.length === 0)
-        throw new UnprocessableEntityException(
-          '해당 내용이 존재하지 않습니다.',
-        );
-      await this.cacheManager.set(`${search && where}`, resultmap, { ttl: 0 });
+      },
+    });
+    const resultmap = result.hits.hits.map((el: any) => ({
+      id: el._source.id,
+      title: el._source.title,
+      location: el._source.location,
+      startDate: el._source.startdate,
+      endDate: el._source.enddate,
+    }));
+    console.log('resultmap', resultmap);
+    if (resultmap.length === 0)
+      throw new UnprocessableEntityException('해당 내용이 존재하지 않습니다.');
+    await this.cacheManager.set(`${search}`, resultmap, { ttl: 0 });
 
-      return resultmap;
-    }
+    return resultmap;
   }
-  //지도 + 해시태그
+
   @Query(() => [Schedule])
   async scheduleHashTagSearch(
     @Args('where') where: string,

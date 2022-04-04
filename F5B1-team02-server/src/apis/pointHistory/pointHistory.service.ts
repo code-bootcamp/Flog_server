@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CurrentUser } from 'src/common/auth/gql-user.param';
 import { Repository } from 'typeorm';
+import { PointTransaction } from '../pointTranscation/entities/pointTransaction.entity';
 import { PointHistory } from './entities/pointHistory.entity';
 
 @Injectable()
@@ -15,13 +16,9 @@ export class PointHistoryService {
       .createQueryBuilder('pointHistory')
       .innerJoinAndSelect('pointHistory.user', 'user')
       .where('user.id = :userId', { userId: currentUser.id })
-      .orderBy('pointHistory.createdAt')
+      .orderBy('pointHistory.createdAt', 'DESC')
       .getMany();
 
     return history;
-    // return await this.pointHistoryRepository.find({
-    //   user: currentUser.id,
-    //   // createdAt: createAt,
-    // })
   }
 }

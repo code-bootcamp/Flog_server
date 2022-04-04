@@ -6,8 +6,8 @@ flog-project.json
 
 # Logs
 logs
-*.log
-npm-debug.log*
+.log
+npm-debug.log
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -27,10 +27,10 @@ lerna-debug.log*
 .c9/
 *.launch
 .settings/
-*.sublime-workspace
+.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

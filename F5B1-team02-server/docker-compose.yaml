@@ -2,7 +2,7 @@ version: '3.3'
 services:
   flog_backend:
     platform: linux/x86_64
-    image: asia.gcr.io/flog-project/flog_backend:1.30
+    image: asia.gcr.io/flog-project/flog_backend:1.41
     build:
       context: .
       dockerfile: Dockerfile
@@ -43,6 +43,6 @@ services:
   logstash:
     image: logstash:7.17.0
     volumes:
-      - ./elk/logstash/flog_template.json:/_templates/flog_template.json
+      # - ./elk/logstash/flog_template.json:/_templates/flog_template.json
       - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar

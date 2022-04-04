@@ -27,6 +27,9 @@ type PointTransaction {
   id: String!
   impUid: String!
   amount: Int!
+  user: User!
+  historyId: PointHistory!
+  mainCategory: MainCategory!
 }
 
 type PointHistory {
@@ -34,6 +37,8 @@ type PointHistory {
   changed: Int!
   createdAt: DateTime!
   status: POINT_TRANSACTION_STATUS_ENUM!
+  user: User!
+  current: Int!
   pointId: PointTransaction!
   mainCategory: MainCategory!
 }

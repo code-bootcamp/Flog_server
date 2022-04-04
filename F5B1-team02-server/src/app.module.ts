@@ -51,7 +51,7 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'flog_database',
-      // host: '10.63.130.161',
+      // host: '10.114.129.225',
       port: 3306,
       username: 'root',
       password: 'root',

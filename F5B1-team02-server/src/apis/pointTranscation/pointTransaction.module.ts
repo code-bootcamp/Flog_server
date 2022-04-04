@@ -14,7 +14,6 @@ import { PointTransactionService } from './pointTransaction.service';
       PointTransaction,
       User,
       PointHistory,
-      // SharedList,
     ]),
   ],
   providers: [

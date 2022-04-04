@@ -13,8 +13,6 @@ export class AuthService {
       { secret: process.env.REFRESH_TOKEN_KEY, expiresIn: '2w' },
     );
 
-    //// 개발환경
-    res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
 
     // 배포환경
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

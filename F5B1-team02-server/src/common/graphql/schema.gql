@@ -143,6 +143,7 @@ type Query {
   fetchDetailSchedule(scheduleId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
+  fetchShareBoard(scheduleId: String!): [Board!]!
   scheduleSearch(search: String!, where: String!): [Schedule!]!
   scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
   fetchMainCategory: [MainCategory!]!
@@ -166,8 +167,7 @@ type Mutation {
   deleteBannerImagefile(scheduleId: String!): String!
   updateBannerImage(scheduleId: String!, updateBannerImageInput: updateBannerImageInput!): Schedule!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
-  share(scheduleId: String!): Schedule!
-  unshare(scheduleId: String!): Schedule!
+  updateShare(scheduleId: String!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
@@ -242,9 +242,11 @@ input CreateDetailScheduleInput {
 }
 
 input UpdateDetailScheduleInput {
-  date: String!
-  useTime: String!
-  place: String!
+  day: String
+  date: String
+  startTime: String
+  useTime: String
+  place: String
   memo: String
 }
 

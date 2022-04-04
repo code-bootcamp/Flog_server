@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
@@ -24,10 +24,6 @@ export class AuthController {
     @Res() res: Response,
   ) {
     let user = await this.userService.findOne({ email: req.user.email });
-    // console.log('===============google user=============');
-    // console.log(user);
-    // console.log('😁에러 req.user.id ' + req.user.email);
-    // console.log('😁에러 user: ' + user);
 
     if (!user) {
       const createUser = req.user;
@@ -36,8 +32,6 @@ export class AuthController {
 
     this.authService.setRefreshToken({ user, res });
 
-    res.redirect('http://localhost:5500/frontend/social-login-success.html');
+    res.redirect('https://flog.today');
   }
-
-  // 구글 로그아웃
 }

@@ -3,14 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { DetailSchedule } from './entities/detailSchedule.entity';
-// interface ICreate {
-//   createDetailScheduleInput: CreateDetailScheduleInput;
-//   scheduleId: string;
-// }
-
-interface IDelete {
-  detailScheduleId: string;
-}
 
 @Injectable()
 export class DetailScheduleService {

@@ -5,11 +5,6 @@ import { Board } from './entities/board.entity';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { getToday } from 'src/libraries/utils';
-import { FileUpload } from 'graphql-upload';
-
-interface IFile {
-  files: FileUpload[];
-}
 
 @Injectable()
 export class BoardService {
@@ -72,9 +67,6 @@ export class BoardService {
         .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
         .on('error', (error) => reject('error: ' + error));
     });
-    console.log('=============imageUrl==========================');
-    console.log(imageUrl);
-    console.log('===============================================');
 
     return imageUrl;
   }
@@ -90,10 +82,6 @@ export class BoardService {
       .bucket(process.env.STORAGE_BUCKET)
       .file(fileName)
       .delete();
-
-    console.log('=========================================================');
-    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
-    console.log('=========================================================');
 
     return result ? true : false;
   }

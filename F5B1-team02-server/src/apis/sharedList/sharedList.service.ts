@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from '../board/entities/board.entity';
-import { DetailSchedule } from '../detailSchedule/entities/detailSchedule.entity';
 import { Schedule } from '../schedule/entities/schedule.entity';
 
 @Injectable()

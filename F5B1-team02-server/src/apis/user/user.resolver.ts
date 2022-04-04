@@ -8,7 +8,6 @@ import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { CreateUserInput } from './dto/createUser.input';
 import { UpdateUserInput } from './dto/updateUser.input';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-// import { AuthGuard } from '@nestjs/passport';
 
 @Resolver()
 export class UserResolver {
@@ -51,7 +50,6 @@ export class UserResolver {
   ) {
     const { email, ...user } = currentUser;
 
-    // 수정한 비밀번호 해쉬로변경
     const { password, ...update } = updateUserInput;
     const hashedPassword = await bcrypt.hash(password, 10);
 

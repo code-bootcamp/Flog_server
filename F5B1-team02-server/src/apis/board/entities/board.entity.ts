@@ -1,5 +1,4 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
 import { Schedule } from 'src/apis/schedule/entities/schedule.entity';
 import {
   Column,

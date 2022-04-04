@@ -46,37 +46,37 @@ export class ShareScheduleResolver {
     @Args('search') search: string,
     @Args('where') where: string,
   ) {
-    const list = await this.cacheManager.get(`${search && where}`);
-    if (list) {
-      console.log('1111', list);
-      return list;
-    } else {
-      const result = await this.elasticsearchService.search({
-        index: '1flog',
-        query: {
-          bool: {
-            must: [
-              { match: { title: search } }, //
-              { match: { location: where } }, //
-            ],
-          },
+    // const list = await this.cacheManager.get(`${search}`);
+    // if (list) {
+    //   return list;
+    // } else {
+    const result = await this.elasticsearchService.search({
+      index: '1flog',
+      from: 0,
+      size: 100,
+      query: {
+        bool: {
+          must: [
+            { prefix: { title: search } }, //
+            { match: { location: where } }, //
+          ],
         },
-      });
-      // console.log(result.hits.hits);
-      const resultmap = result.hits.hits.map((el: any) => ({
-        id: el._source.id,
-        title: el._source.title,
-        location: el._source.location,
-      }));
-      console.log('resultmap', resultmap);
-      if (resultmap.length === 0)
-        throw new UnprocessableEntityException(
-          '해당 내용이 존재하지 않습니다.',
-        );
-      await this.cacheManager.set(`${search && where}`, resultmap, { ttl: 0 });
+      },
+    });
+    const resultmap = result.hits.hits.map((el: any) => ({
+      id: el._source.id,
+      title: el._source.title,
+      location: el._source.location,
+      startDate: el._source.startdate,
+      endDate: el._source.enddate,
+    }));
+    console.log('resultmap', resultmap);
+    if (resultmap.length === 0)
+      throw new UnprocessableEntityException('해당 내용이 존재하지 않습니다.');
+    await this.cacheManager.set(`${search}`, resultmap, { ttl: 0 });
 
-      return resultmap;
-    }
+    return resultmap;
+    // }
   }
   //지도 + 해시태그
   @Query(() => [Schedule])

@@ -1,10 +1,13 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { MainCategory } from 'src/apis/mainCategory/entities/mainCategory.entity';
+import { PointHistory } from 'src/apis/pointHistory/entities/pointHistory.entity';
 import { User } from 'src/apis/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,5 +30,14 @@ export class PointTransaction {
   createdAt: Date;
 
   @ManyToOne(() => User)
+  @Field(() => User)
   user: User;
+
+  @OneToOne(() => PointHistory)
+  @Field(() => PointHistory)
+  historyId: PointHistory;
+
+  @ManyToOne(() => MainCategory, { cascade: true, onDelete: 'CASCADE' })
+  @Field(() => MainCategory)
+  mainCategory: MainCategory;
 }

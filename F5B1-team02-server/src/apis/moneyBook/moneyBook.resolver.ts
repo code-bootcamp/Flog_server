@@ -40,14 +40,12 @@ export class MoneyBookResolver {
   async updateMoneyBook(
     @Args('budgetId') budgetId: string,
     @Args('moneyBookId') moneyBookId: string,
-    // @Args('amount') amount: number,
     @Args('updateMoneyBookInput') updateMoneyBookInput: UpdateMoneyBookInput,
-    @CurrentUser() currentUSer: ICurrentUser,
+    @CurrentUser() currentUser: ICurrentUser,
   ) {
     return await this.moneyBookService.update({
       moneyBookId,
       budgetId,
-      // amount,
       updateMoneyBookInput,
     });
   }

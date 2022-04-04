@@ -14,14 +14,15 @@ export class AuthService {
     );
 
     //// 개발환경
-    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
+    res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
 
     // 배포환경
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader(
-      'Set-Cookie',
-      `refreshToken=${refreshToken}; path=/; domain=.gyeoriii.com; SameSite=None; Secure; httpOnly;`,
-    );
+    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    // res.setHeader('Access-Control-Allow-Origin', 'https://flog.today');
+    // res.setHeader(
+    //   'Set-Cookie',
+    //   `refreshToken=${refreshToken} //path=/; domain=.gyeoriii.com; SameSite=None; Secure; httpOnly;; `,
+    // );
   }
 
   getAccessToken({ user }) {

@@ -21,13 +21,13 @@ export class ScheduleResolver {
     @Args('page', { defaultValue: 1 }) page: number,
   ) {
     //// 배포할때;
-    // const result = await this.elasticSearchService.search({
-    //   index: 'flog00',
-    //   query: {
-    //     match_all: {},
-    //   },
-    // });
-    // console.log('fetchProducts', JSON.stringify(result));
+    const result = await this.elasticSearchService.search({
+      index: 'flog001',
+      query: {
+        match_all: {},
+      },
+    });
+    console.log('fetchProducts', JSON.stringify(result));
     return await this.scheduleService.findMyQt({ currentUser, page });
   }
 
@@ -44,16 +44,15 @@ export class ScheduleResolver {
     @Args('createScheduleInput') createScheduleInput: CreateScheduleInput,
   ) {
     const { id, ...user } = currentUser;
-    // //배포할때 한번 연결해주기
-    // await this.elasticSearchService.create({
-    //   id: 'flog',
-    //   index: 'flog00',
-    //   document: {
-    //     id,
-    //     ...createScheduleInput,
-    //   },
-    // });
-
+    //배포할때 한번 연결해주기
+    await this.elasticSearchService.create({
+      id: 'flog',
+      index: 'flog001',
+      document: {
+        id,
+        ...createScheduleInput,
+      },
+    });
     return await this.scheduleService.create({
       id,
       createScheduleInput,

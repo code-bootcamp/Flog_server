@@ -28,9 +28,6 @@ export class BannerImageService {
         .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
         .on('error', (error) => reject('error: ' + error));
     });
-    console.log('=============imageUrl==========================');
-    console.log(imageUrl);
-    console.log('===============================================');
 
     return imageUrl;
   }
@@ -52,7 +49,6 @@ export class BannerImageService {
       .file(fileName)
       .delete();
 
-    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
     await this.scheduleRepositroy.save({ ...schedule, url: null });
     return result ? true : false;
   }

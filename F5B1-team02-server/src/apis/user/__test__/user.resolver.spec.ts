@@ -1,31 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from 'src/app.controller';
-import { AppService } from 'src/app.service';
+// import { AppController } from 'src/app.controller';
 import { UserResolver } from '../user.resolver';
 import { UserService } from '../user.service';
 
 describe('UserResolver', () => {
   let userResolver: UserResolver;
 
-  beforeEach(async () => {});
-  const appModule = await Test.createTestingModule({
-    controllers: [AppController],
-    providers: [UserService],
-    // providers: [AppService],
-  }).compile();
-
-  userResolver = appModule.get(UserResolver);
-  // userResolver = user.get<UserResolver>(UserResolver);
+  beforeEach(async () => {
+    const appModule: TestingModule = await Test.createTestingModule({
+      // controllers: [AppController],
+      providers: [UserService],
+    }).compile();
+    userResolver = appModule.get(UserResolver);
+  });
 
   describe('createUser', () => {
-    it('회원가입', () => {
-      const myData = {
+    it('회원가입', async () => {
+      const userData = {
         nickName: '둘리', //
         email: '11@11',
         password: '1234',
+        mainCategoryId: '1',
       };
-      const result = userResolver.createUser({ ...myData });
-      expect(result).toBe();
+      const result = await userResolver.createUser({ ...userData });
+      expect(result);
     });
   });
 });

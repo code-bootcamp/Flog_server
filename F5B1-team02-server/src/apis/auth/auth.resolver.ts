@@ -69,6 +69,7 @@ export class AuthResolver {
   async logout(@Context() context: any): Promise<string> {
     const re_Token = context.req.headers.cookie.replace('refreshToken=', '');
     const ac_Token = context.req.headers.authorization.split(' ')[1];
+
     const time = Math.floor(Date.now() / 1000);
 
     try {

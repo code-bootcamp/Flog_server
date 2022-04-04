@@ -63,6 +63,7 @@ type Schedule {
   user: User!
   mainCategory: MainCategory!
   createAt: DateTime!
+  tripdates: String!
 }
 
 enum NUMBER_PEOPLE_ENUM {
@@ -96,6 +97,7 @@ type MoneyBook {
   context: String!
   memo: String!
   amount: Int!
+  tripdates: String!
 }
 
 enum SPENDING_CATEGORY_STATUS_ENUM {
@@ -132,10 +134,11 @@ type Query {
   fetchSchedules(page: Float = 1): [Schedule!]!
   fetchSchedule(scheduleId: String!): Schedule!
   fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
-  fetchDetailSchedules(scheduleId: String!, userId: String!): [DetailSchedule!]!
-  fetchDetailSchedule(scheduleId: String!, userId: String!, day: String!): [DetailSchedule!]!
+  fetchDetailSchedules(scheduleId: String!): [DetailSchedule!]!
+  fetchDetailSchedule(scheduleId: String!, day: String!): [DetailSchedule!]!
   fetchBoard(scheduleId: String!): [Board!]!
   fetchShareSchedules(page: Float = 1): [Schedule!]!
+  fetchShareBoard(scheduleId: String!): [Board!]!
   scheduleSearch(search: String!, where: String!): [Schedule!]!
   scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
   fetchMainCategory: [MainCategory!]!
@@ -159,8 +162,7 @@ type Mutation {
   deleteBannerImagefile(scheduleId: String!): String!
   updateBannerImage(scheduleId: String!, updateBannerImageInput: updateBannerImageInput!): Schedule!
   createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
-  share(scheduleId: String!): Schedule!
-  unshare(scheduleId: String!): Schedule!
+  updateShare(scheduleId: String!): Schedule!
   createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
   updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
   createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
@@ -169,15 +171,16 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
   updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
   deleteBoard(scheduleId: String!): Boolean!
-  uploadBoardImagefiles(files: [Upload!]!): [String!]!
+  uploadBoardImagefile(file: Upload!): String!
   deleteBoardImagefile(url: String!): String!
+  createMainCategory(name: MAINCATEGORY_ENUM!): MainCategory!
 }
 
 input CreateUserInput {
   nickName: String!
   email: String!
   password: String!
-  mainCategoryId: String!
+  mainCategoryName: MAINCATEGORY_ENUM!
 }
 
 input UpdateUserInput {
@@ -202,7 +205,8 @@ input CreateScheduleInput {
   endDate: String!
   numberPeople: NUMBER_PEOPLE_ENUM
   hashtag: HASHTAG!
-  mainCategoryId: String!
+  mainCategoryName: MAINCATEGORY_ENUM!
+  tripdates: String!
 }
 
 input CreateMoneyBookInput {
@@ -211,6 +215,7 @@ input CreateMoneyBookInput {
   time: String!
   context: String!
   memo: String!
+  tripdates: String!
 }
 
 input UpdateMoneyBookInput {
@@ -232,9 +237,11 @@ input CreateDetailScheduleInput {
 }
 
 input UpdateDetailScheduleInput {
-  date: String!
-  useTime: String!
-  place: String!
+  day: String
+  date: String
+  startTime: String
+  useTime: String
+  place: String
   memo: String
 }
 

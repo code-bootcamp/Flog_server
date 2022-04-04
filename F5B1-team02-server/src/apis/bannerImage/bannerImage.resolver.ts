@@ -4,7 +4,6 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { GqlAuthAccessGuard } from 'src/common/auth/gql-auth.guard';
 import { BannerImageService } from './bannerImage.service';
 import { Schedule } from '../schedule/entities/schedule.entity';
-import { scheduled } from 'rxjs';
 import { updateBannerImageInput } from './dto/updateBannerImage.input';
 
 @Resolver()

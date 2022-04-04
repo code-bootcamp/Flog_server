@@ -30,7 +30,7 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
     if (await this.cacheManager.get(`refreshToken:${re_Token}`)) {
       throw new UnauthorizedException('이미 로그아웃된 사용자입니다');
     }
-    // console.log(payload);
+
     return {
       id: payload.sub,
       email: payload.email,

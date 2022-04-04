@@ -1,15 +1,8 @@
-import {
-  ConflictException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserInput } from './dto/createUser.input';
-import { UpdateUserInput } from './dto/updateUser.input';
-import * as bcrypt from 'bcrypt';
 import { MainCategory } from '../mainCategory/entities/mainCategory.entity';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,9 +27,6 @@ export class UserService {
     const result = await this.mainCategoryRepository.findOne({
       name: mainCategoryName,
     });
-    console.log('=======result==============================');
-    console.log(result);
-    console.log('=====================================');
 
     if (isUserEmail) {
       throw new HttpException(
@@ -73,10 +63,6 @@ export class UserService {
       .file(fileName)
       .delete();
 
-    console.log('================================================');
-    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
-    console.log('================================================');
-
     await this.userRepository.delete({ email: userEmail });
 
     return result ? true : false;
@@ -96,9 +82,6 @@ export class UserService {
         .on('finish', () => resolve(`${process.env.STORAGE_BUCKET}/${fname}`))
         .on('error', (error) => reject('error: ' + error));
     });
-    console.log('=============imageUrl==========================');
-    console.log(imageUrl);
-    console.log('===============================================');
 
     return imageUrl;
   }
@@ -116,10 +99,6 @@ export class UserService {
       .bucket(process.env.STORAGE_BUCKET)
       .file(fileName)
       .delete();
-
-    console.log('================================================');
-    console.log(`gs://${process.env.STORAGE_BUCKET}/${fileName} deleted`);
-    console.log('================================================');
 
     const { url, ...user } = userInfo;
     const deleteUrl = { ...user, url: null };

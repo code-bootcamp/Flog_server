@@ -8,6 +8,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -41,9 +42,15 @@ export class PointHistory {
   status: POINT_TRANSACTION_STATUS_ENUM;
 
   @ManyToOne(() => User)
+  @Field(() => User)
   user: User;
 
+  @Column({ default: 0 })
+  @Field(() => Int)
+  current: number;
+
   @JoinColumn()
+  @OneToOne(() => PointTransaction)
   @Field(() => PointTransaction)
   pointId: PointTransaction;
 

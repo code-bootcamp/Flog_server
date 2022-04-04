@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { map } from 'rxjs';
 import { Repository } from 'typeorm';
-import {
-  MainCategory,
-  MAINCATEGORY_ENUM,
-} from './entities/mainCategory.entity';
+import { MainCategory } from './entities/mainCategory.entity';
 
 @Injectable()
 export class MainCategoryService {

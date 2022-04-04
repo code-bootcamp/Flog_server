@@ -10,7 +10,6 @@ import { Board } from '../board/entities/board.entity';
 import { HASHTAG, Schedule } from '../schedule/entities/schedule.entity';
 import { ShareScheduleService } from './sharedList.service';
 import { Cache } from 'cache-manager';
-
 import { ScheduleService } from '../schedule/schedule.service';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 
@@ -24,7 +23,6 @@ export class ShareScheduleResolver {
     private readonly cacheManager: Cache,
   ) {}
 
-  //족보 리스트 조회
   @Query(() => [Schedule])
   async fetchShareSchedules(
     @Args('page', { defaultValue: 1 }) page: number, //
@@ -32,7 +30,6 @@ export class ShareScheduleResolver {
     return await this.shareScheduleService.findMyQtList({ page });
   }
 
-  // 족보 조회
   @Query(() => [Board])
   async fetchBoard(
     @Args('scheduleId') scheduleId: string, //
@@ -40,18 +37,13 @@ export class ShareScheduleResolver {
     return await this.shareScheduleService.findMyQtBoard({ scheduleId });
   }
 
-  //지도 + 검색
   @Query(() => [Schedule])
   async scheduleSearch(
     @Args('search') search: string,
     @Args('where') where: string,
   ) {
-    // const list = await this.cacheManager.get(`${search}`);
-    // if (list) {
-    //   return list;
-    // } else {
     const result = await this.elasticsearchService.search({
-      index: '1flog',
+      index: '100flog',
       from: 0,
       size: 100,
       query: {
@@ -76,9 +68,8 @@ export class ShareScheduleResolver {
     await this.cacheManager.set(`${search}`, resultmap, { ttl: 0 });
 
     return resultmap;
-    // }
   }
-  //지도 + 해시태그
+
   @Query(() => [Schedule])
   async scheduleHashTagSearch(
     @Args('where') where: string,

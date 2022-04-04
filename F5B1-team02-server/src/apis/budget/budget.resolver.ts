@@ -8,7 +8,6 @@ import { Budget } from './entities/budget.entity';
 @Resolver()
 export class BudgetResolver {
   constructor(
-    // private readonly scheduleService:ScheduleService,
     private readonly budgetService: BudgetService,
   ) {}
 

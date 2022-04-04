@@ -43,7 +43,7 @@ export class ShareScheduleResolver {
     @Args('where') where: string,
   ) {
     const result = await this.elasticsearchService.search({
-      index: '100flog',
+      index: '1flog',
       from: 0,
       size: 100,
       query: {

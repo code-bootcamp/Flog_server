@@ -1,0 +1,260 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MainCategory {
+  id: String!
+  name: MAINCATEGORY_ENUM!
+}
+
+enum MAINCATEGORY_ENUM {
+  MINE
+  OUR
+  MYPAGE
+}
+
+type User {
+  id: String!
+  email: String!
+  nickName: String!
+  phoneNumber: String
+  point: Int!
+  url: String
+  mainCategory: MainCategory!
+}
+
+type PointTransaction {
+  id: String!
+  impUid: String!
+  amount: Int!
+  user: User!
+  historyId: PointHistory!
+  mainCategory: MainCategory!
+}
+
+type PointHistory {
+  id: String!
+  changed: Int!
+  createdAt: DateTime!
+  status: POINT_TRANSACTION_STATUS_ENUM!
+  user: User!
+  current: Int!
+  pointId: PointTransaction!
+  mainCategory: MainCategory!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum POINT_TRANSACTION_STATUS_ENUM {
+  CHARGE
+  PAYMENT
+  EARN
+  CANCEL
+}
+
+type Schedule {
+  id: String!
+  title: String!
+  location: String!
+  startDate: String!
+  endDate: String!
+  url: String
+  isShare: String!
+  numberPeople: NUMBER_PEOPLE_ENUM
+  hashtag: HASHTAG!
+  user: User!
+  mainCategory: MainCategory!
+  createAt: DateTime!
+  tripdates: String!
+}
+
+enum NUMBER_PEOPLE_ENUM {
+  ONE
+  TWO
+  THREE
+  FOUR
+  GROUP
+}
+
+enum HASHTAG {
+  ALONE
+  FRIEND
+  FAMILY
+  COUPLE
+  PET
+}
+
+type Budget {
+  id: String!
+  amount: Int!
+  totalAmount: Int!
+  mainCategory: MainCategory!
+}
+
+type MoneyBook {
+  id: String!
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  time: String!
+  context: String!
+  memo: String!
+  amount: Int!
+  tripdates: String!
+}
+
+enum SPENDING_CATEGORY_STATUS_ENUM {
+  FOOD
+  SHOPPING
+  TRANSPORTATION
+  TOURISM
+  STAY
+  ETC
+}
+
+type DetailSchedule {
+  id: String!
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
+  schedule: Schedule!
+}
+
+type Board {
+  id: String!
+  day: String!
+  content: String!
+  schedule: Schedule!
+}
+
+type Query {
+  fetchUser: User!
+  fetchBudget(scheduleId: String!): [Budget!]!
+  fetchPointHistory: [PointHistory!]!
+  fetchSchedules(page: Float = 1): [Schedule!]!
+  fetchSchedule(scheduleId: String!): Schedule!
+  fetchMoneyBook(date: String!, budgetId: String!): [MoneyBook!]!
+  fetchDetailSchedules(scheduleId: String!): [DetailSchedule!]!
+  fetchDetailSchedule(scheduleId: String!, day: String!): [DetailSchedule!]!
+  fetchBoard(scheduleId: String!): [Board!]!
+  fetchShareSchedules(page: Float = 1): [Schedule!]!
+  fetchShareBoard(scheduleId: String!): [Board!]!
+  scheduleSearch(search: String!, where: String!): [Schedule!]!
+  scheduleHashTagSearch(where: String!, hashTag: String!): [Schedule!]!
+  fetchMainCategory: [MainCategory!]!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  deleteUser(userEmail: String!): Boolean!
+  uploadProfileImagefile(file: Upload!): String!
+  deleteProfileImagefile(userId: String!): String!
+  login(email: String!, password: String!): String!
+  restoreAccessToken: String!
+  logout: String!
+  createBudget(totalAmount: Float!, scheduleId: String!): Budget!
+  updateBudget(totalAmount: Float!, scheduleId: String!): Budget!
+  createPointTransaction(impUid: String!, amount: Float!): PointTransaction!
+  cancelPointTransaction(impUid: String!): PointTransaction!
+  paymentPointTransaction(userId: String!, point: Float!): PointTransaction!
+  uploadBannerImagefile(file: Upload!): String!
+  deleteBannerImagefile(scheduleId: String!): String!
+  updateBannerImage(scheduleId: String!, updateBannerImageInput: updateBannerImageInput!): Schedule!
+  createSchedule(createScheduleInput: CreateScheduleInput!): Schedule!
+  updateShare(scheduleId: String!): Schedule!
+  createMoneyBook(createMoneyBookInput: CreateMoneyBookInput!, budgetId: String!, amount: Float!): MoneyBook!
+  updateMoneyBook(budgetId: String!, moneyBookId: String!, updateMoneyBookInput: UpdateMoneyBookInput!): MoneyBook!
+  createDetailSchedule(createDetailScheduleInput: CreateDetailScheduleInput!, scheduleId: String!): DetailSchedule!
+  updateDetailSchedule(updateDetailScheduleInput: UpdateDetailScheduleInput!, detailScheduleId: String!): DetailSchedule!
+  deleteDetailSchedule(detailScheduleId: String!): Boolean!
+  createBoard(createBoardInput: CreateBoardInput!, scheduleId: String!): Board!
+  updateBoard(updateBoardInput: UpdateBoardInput!, boardId: String!): Board!
+  deleteBoard(scheduleId: String!): Boolean!
+  uploadBoardImagefile(file: Upload!): String!
+  deleteBoardImagefile(url: String!): String!
+  createMainCategory(name: MAINCATEGORY_ENUM!): MainCategory!
+}
+
+input CreateUserInput {
+  nickName: String!
+  email: String!
+  password: String!
+  mainCategoryName: MAINCATEGORY_ENUM!
+}
+
+input UpdateUserInput {
+  nickName: String
+  phoneNumber: String
+  email: String
+  password: String
+  url: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input updateBannerImageInput {
+  url: String = "true"
+}
+
+input CreateScheduleInput {
+  title: String!
+  location: String!
+  startDate: String!
+  endDate: String!
+  numberPeople: NUMBER_PEOPLE_ENUM
+  hashtag: HASHTAG!
+  mainCategoryName: MAINCATEGORY_ENUM!
+  tripdates: String!
+}
+
+input CreateMoneyBookInput {
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  time: String!
+  context: String!
+  memo: String!
+  tripdates: String!
+}
+
+input UpdateMoneyBookInput {
+  date: String!
+  status: SPENDING_CATEGORY_STATUS_ENUM!
+  amount: Int!
+  time: String!
+  context: String!
+  memo: String!
+}
+
+input CreateDetailScheduleInput {
+  day: String!
+  date: String!
+  startTime: String!
+  useTime: String!
+  place: String!
+  memo: String
+}
+
+input UpdateDetailScheduleInput {
+  day: String
+  date: String
+  startTime: String
+  useTime: String
+  place: String
+  memo: String
+}
+
+input CreateBoardInput {
+  day: String!
+  content: String!
+}
+
+input UpdateBoardInput {
+  content: String!
+}

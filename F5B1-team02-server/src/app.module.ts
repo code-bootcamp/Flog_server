@@ -44,14 +44,13 @@ import { MainCategoryModule } from './apis/mainCategory/mainCategory.module';
       autoSchemaFile: 'src/common/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
       cors: {
-        origin: 'http://localhost:3000',
+        origin: 'https://flog.today',
         credentials: true,
       },
     }), //
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'flog_database',
-      // host: '10.114.129.225',
       port: 3306,
       username: 'root',
       password: 'root',

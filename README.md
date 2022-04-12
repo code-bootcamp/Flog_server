@@ -8,7 +8,7 @@
 >우리는 우물 안 개구리가 아닌, 우물 밖 개구리의 삶을 지향합니다.  
 >더 멀리, 넓은 세상으로 나가는 여행자들에게 도움이 되고자 합니다.
 
-![기획의도](images/%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84.png "기획의도")
+![기획의도](https://user-images.githubusercontent.com/91056667/163004174-b721eb56-f62b-4f46-b3ff-291eb8a367f0.png)
 
 <br/>
 
@@ -23,7 +23,7 @@
 <br/>
 
 ## ERD
-[![ERD](images/Flog_%EC%B5%9C%EC%A2%85_ERD.png "Flog ERD")](https://www.erdcloud.com/d/MTDe43ncafuQNrdwq)
+[![Flog_최종_ERD](https://user-images.githubusercontent.com/91056667/163004252-018877a6-fbdb-4d59-a7c3-f385968dca56.png)](https://www.erdcloud.com/d/MTDe43ncafuQNrdwq)
 
 <br/>
 
@@ -37,7 +37,7 @@
 |Fetch|Query{API name}{request col}|조회 성공 or 실패메시지|
 |login/logout|Query{API name}{request col}|성공 or 실패메시지|
 
-![](images/api_docs_1.jpg "api docs")
+![api_docs_1](https://user-images.githubusercontent.com/91056667/163004283-0690232f-1d3c-4d93-9dfd-054a5792454d.jpg)
 
 <br/>
 

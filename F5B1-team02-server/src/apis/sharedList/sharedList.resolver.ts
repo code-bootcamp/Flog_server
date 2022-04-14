@@ -61,6 +61,7 @@ export class ShareScheduleResolver {
       location: el._source.location,
       startDate: el._source.startdate,
       endDate: el._source.enddate,
+      url:el._source.url
     }));
     console.log('resultmap', resultmap);
     if (resultmap.length === 0)

@@ -61,6 +61,11 @@ export class Schedule {
   @Field(() => String, { nullable: true })
   url?: string;
 
+  // 썸네일이미지-모바일용
+  @Column({ default: null })
+  @Field(() => String, { nullable: true })
+  thumbnailUrl?: string;
+
   // 공유여부
   @Column({ default: 0 })
   @Field(() => String)
